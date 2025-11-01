@@ -1,0 +1,52 @@
+{
+  "common": {
+    "menu": "Menü",
+    "home": "Ana Sayfa",
+    "admin": "Yönetim",
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap",
+    "language": "Dil",
+    "add": "Ekle",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "search": "Ara",
+    "categories": "Kategoriler",
+    "all": "Tümü"
+  },
+  "home": {
+    "welcome": "Hoş Geldiniz",
+    "welcomeMessage": "Lezzetli menümüzü keşfedin",
+    "viewMenu": "Menüyü Görüntüle"
+  },
+  "menu": {
+    "title": "Menümüz",
+    "description": "Lezzetli seçeneklerimizi keşfedin",
+    "price": "Fiyat",
+    "noItems": "Bu kategoride henüz ürün bulunmamaktadır"
+  },
+  "admin": {
+    "title": "Yönetim Paneli",
+    "items": "Ürünler",
+    "addItem": "Yeni Ürün Ekle",
+    "editItem": "Ürün Düzenle",
+    "categories": "Kategori Yönetimi",
+    "addCategory": "Yeni Kategori Ekle",
+    "itemName": "Ürün Adı",
+    "itemDescription": "Açıklama",
+    "itemPrice": "Fiyat",
+    "itemCategory": "Kategori",
+    "itemImage": "Resim",
+    "saveSuccess": "Başarıyla kaydedildi",
+    "deleteSuccess": "Başarıyla silindi"
+  },
+  "auth": {
+    "email": "E-posta",
+    "password": "Şifre",
+    "loginSuccess": "Giriş başarılı",
+    "loginError": "Giriş başarısız",
+    "logoutSuccess": "Çıkış başarılı"
+  }
+}
+

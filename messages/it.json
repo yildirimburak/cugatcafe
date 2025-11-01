@@ -1,0 +1,47 @@
+{
+  "common": {
+    "menu": "Menù",
+    "home": "Home",
+    "admin": "Amministrazione",
+    "login": "Accedi",
+    "logout": "Esci",
+    "language": "Lingua",
+    "add": "Aggiungi",
+    "edit": "Modifica",
+    "delete": "Elimina",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "search": "Cerca",
+    "categories": "Categorie",
+    "all": "Tutti"
+  },
+  "menu": {
+    "title": "Il Nostro Menù",
+    "description": "Scopri le nostre deliziose opzioni",
+    "price": "Prezzo",
+    "noItems": "Nessun articolo in questa categoria al momento"
+  },
+  "admin": {
+    "title": "Pannello di Amministrazione",
+    "items": "Articoli",
+    "addItem": "Aggiungi nuovo articolo",
+    "editItem": "Modifica articolo",
+    "categories": "Gestione Categorie",
+    "addCategory": "Aggiungi nuova categoria",
+    "itemName": "Nome articolo",
+    "itemDescription": "Descrizione",
+    "itemPrice": "Prezzo",
+    "itemCategory": "Categoria",
+    "itemImage": "Immagine",
+    "saveSuccess": "Salvato con successo",
+    "deleteSuccess": "Eliminato con successo"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "loginSuccess": "Accesso riuscito",
+    "loginError": "Accesso fallito",
+    "logoutSuccess": "Disconnessione riuscita"
+  }
+}
+

@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cugat Café - Menü Sistemi
 
-## Getting Started
+Modern, çok dilli cafe menü yönetim sistemi. Next.js, Firebase ve Vercel ile geliştirilmiştir.
 
-First, run the development server:
+## Özellikler
 
+- 🍽️ **Modern Menü Görünümü**: Kategorilere göre düzenlenmiş, görsel açıdan zengin menü
+- 🌍 **Çoklu Dil Desteği**: Türkçe ve İngilizce dil desteği
+- 🔐 **Admin Paneli**: Menü öğeleri ve kategorileri yönetebileceğiniz kapsamlı admin paneli
+- 📱 **Responsive Tasarım**: Mobil ve desktop uyumlu modern tasarım
+- 🔥 **Firebase Entegrasyonu**: Firestore veritabanı ve Firebase Storage
+- ⚡ **Vercel Optimized**: Vercel platformuna özel optimizasyonlar
+
+## Teknolojiler
+
+- **Next.js 16**: React framework (App Router)
+- **TypeScript**: Tip güvenli kod
+- **Tailwind CSS**: Modern CSS framework
+- **Firebase**: Veritabanı, kimlik doğrulama ve storage
+- **next-intl**: Çoklu dil desteği
+- **react-hot-toast**: Bildirim sistemi
+
+## Kurulum
+
+1. Bağımlılıkları yükleyin:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Firebase projenizi oluşturun ve `.env.local` dosyasını oluşturun:
+```bash
+cp .env.local.example .env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Firebase yapılandırma bilgilerinizi `.env.local` dosyasına ekleyin:
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Firebase Firestore'da şu koleksiyonları oluşturun:
+   - `menuItems`: Menü öğeleri
+   - `categories`: Kategoriler
 
-## Learn More
+5. Firebase Authentication'ı etkinleştirin (Email/Password)
 
-To learn more about Next.js, take a look at the following resources:
+6. Development server'ı başlatın:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Firebase Firestore Yapısı
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### menuItems Koleksiyonu
+```typescript
+{
+  name: string;
+  nameEn?: string;
+  description: string;
+  descriptionEn?: string;
+  price: number;
+  category: string; // category id
+  imageUrl?: string;
+  available: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+```
 
-## Deploy on Vercel
+### categories Koleksiyonu
+```typescript
+{
+  name: string;
+  nameEn?: string;
+  order: number;
+  icon?: string;
+  createdAt: Timestamp;
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Firebase Security Rules
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Kategoriler - herkes okuyabilir, sadece admin yazabilir
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Menü öğeleri - herkes okuyabilir, sadece admin yazabilir
+    match /menuItems/{itemId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
+```
+
+## Vercel Deployment
+
+1. Projeyi GitHub'a push edin
+2. Vercel'e giriş yapın ve yeni proje oluşturun
+3. GitHub repository'nizi seçin
+4. Environment variables'ları ekleyin (Firebase config)
+5. Deploy edin!
+
+Veya Vercel CLI ile:
+```bash
+vercel
+```
+
+## Proje Yapısı
+
+```
+cugatcafe/
+├── app/
+│   └── [locale]/          # i18n routing
+│       ├── page.tsx       # Ana sayfa
+│       ├── admin/         # Admin paneli
+│       └── layout.tsx     # Layout
+├── components/
+│   ├── admin/             # Admin komponentleri
+│   ├── Header.tsx
+│   ├── MenuSection.tsx
+│   └── ...
+├── lib/
+│   ├── firebase/          # Firebase yapılandırması
+│   ├── hooks/             # Custom hooks
+│   └── types/             # TypeScript tipleri
+├── messages/              # Dil dosyaları
+│   ├── tr.json
+│   └── en.json
+└── middleware.ts          # i18n middleware
+```
+
+## Kullanım
+
+### Admin Paneline Erişim
+
+1. `/admin` sayfasına gidin
+2. Firebase Authentication ile giriş yapın
+3. Menü öğeleri ve kategorileri yönetin
+
+### Menü Öğesi Ekleme
+
+1. Admin panelinde "Ürünler" sekmesine gidin
+2. "Yeni Ürün Ekle" butonuna tıklayın
+3. Formu doldurun ve kaydedin
+
+### Kategori Ekleme
+
+1. Admin panelinde "Kategoriler" sekmesine gidin
+2. "Yeni Kategori Ekle" butonuna tıklayın
+3. Kategori adını girin ve kaydedin
+
+## Lisans
+
+MIT

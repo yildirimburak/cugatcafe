@@ -1,0 +1,47 @@
+{
+  "common": {
+    "menu": "メニュー",
+    "home": "ホーム",
+    "admin": "管理",
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "language": "言語",
+    "add": "追加",
+    "edit": "編集",
+    "delete": "削除",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "search": "検索",
+    "categories": "カテゴリ",
+    "all": "すべて"
+  },
+  "menu": {
+    "title": "メニュー",
+    "description": "おいしいオプションをご覧ください",
+    "price": "価格",
+    "noItems": "このカテゴリにはまだアイテムがありません"
+  },
+  "admin": {
+    "title": "管理パネル",
+    "items": "アイテム",
+    "addItem": "新しいアイテムを追加",
+    "editItem": "アイテムを編集",
+    "categories": "カテゴリ管理",
+    "addCategory": "新しいカテゴリを追加",
+    "itemName": "アイテム名",
+    "itemDescription": "説明",
+    "itemPrice": "価格",
+    "itemCategory": "カテゴリ",
+    "itemImage": "画像",
+    "saveSuccess": "正常に保存されました",
+    "deleteSuccess": "正常に削除されました"
+  },
+  "auth": {
+    "email": "メール",
+    "password": "パスワード",
+    "loginSuccess": "ログイン成功",
+    "loginError": "ログイン失敗",
+    "logoutSuccess": "ログアウト成功"
+  }
+}
+

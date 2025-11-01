@@ -1,0 +1,47 @@
+{
+  "common": {
+    "menu": "القائمة",
+    "home": "الرئيسية",
+    "admin": "الإدارة",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "language": "اللغة",
+    "add": "إضافة",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "categories": "الفئات",
+    "all": "الكل"
+  },
+  "menu": {
+    "title": "قائمتنا",
+    "description": "اكتشف خياراتنا اللذيذة",
+    "price": "السعر",
+    "noItems": "لا توجد عناصر في هذه الفئة بعد"
+  },
+  "admin": {
+    "title": "لوحة التحكم",
+    "items": "العناصر",
+    "addItem": "إضافة عنصر جديد",
+    "editItem": "تعديل العنصر",
+    "categories": "إدارة الفئات",
+    "addCategory": "إضافة فئة جديدة",
+    "itemName": "اسم العنصر",
+    "itemDescription": "الوصف",
+    "itemPrice": "السعر",
+    "itemCategory": "الفئة",
+    "itemImage": "الصورة",
+    "saveSuccess": "تم الحفظ بنجاح",
+    "deleteSuccess": "تم الحذف بنجاح"
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "loginSuccess": "تم تسجيل الدخول بنجاح",
+    "loginError": "فشل تسجيل الدخول",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح"
+  }
+}
+

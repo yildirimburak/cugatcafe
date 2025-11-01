@@ -1,0 +1,47 @@
+{
+  "common": {
+    "menu": "메뉴",
+    "home": "홈",
+    "admin": "관리",
+    "login": "로그인",
+    "logout": "로그아웃",
+    "language": "언어",
+    "add": "추가",
+    "edit": "편집",
+    "delete": "삭제",
+    "save": "저장",
+    "cancel": "취소",
+    "search": "검색",
+    "categories": "카테고리",
+    "all": "전체"
+  },
+  "menu": {
+    "title": "메뉴",
+    "description": "맛있는 옵션을 발견하세요",
+    "price": "가격",
+    "noItems": "이 카테고리에 아직 항목이 없습니다"
+  },
+  "admin": {
+    "title": "관리 패널",
+    "items": "항목",
+    "addItem": "새 항목 추가",
+    "editItem": "항목 편집",
+    "categories": "카테고리 관리",
+    "addCategory": "새 카테고리 추가",
+    "itemName": "항목 이름",
+    "itemDescription": "설명",
+    "itemPrice": "가격",
+    "itemCategory": "카테고리",
+    "itemImage": "이미지",
+    "saveSuccess": "성공적으로 저장되었습니다",
+    "deleteSuccess": "성공적으로 삭제되었습니다"
+  },
+  "auth": {
+    "email": "이메일",
+    "password": "비밀번호",
+    "loginSuccess": "로그인 성공",
+    "loginError": "로그인 실패",
+    "logoutSuccess": "로그아웃 성공"
+  }
+}
+

@@ -1,0 +1,52 @@
+{
+  "common": {
+    "menu": "Menu",
+    "home": "Home",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout",
+    "language": "Language",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search",
+    "categories": "Categories",
+    "all": "All"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "welcomeMessage": "Discover our delicious menu",
+    "viewMenu": "View Menu"
+  },
+  "menu": {
+    "title": "Our Menu",
+    "description": "Discover our delicious options",
+    "price": "Price",
+    "noItems": "No items in this category yet"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "items": "Items",
+    "addItem": "Add New Item",
+    "editItem": "Edit Item",
+    "categories": "Category Management",
+    "addCategory": "Add New Category",
+    "itemName": "Item Name",
+    "itemDescription": "Description",
+    "itemPrice": "Price",
+    "itemCategory": "Category",
+    "itemImage": "Image",
+    "saveSuccess": "Saved successfully",
+    "deleteSuccess": "Deleted successfully"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "loginSuccess": "Login successful",
+    "loginError": "Login failed",
+    "logoutSuccess": "Logout successful"
+  }
+}
+
