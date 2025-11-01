@@ -65,17 +65,18 @@ export function CategoryFilter({
   ];
 
   return (
-    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm pt-4 pb-2 border-b border-gray-100 shadow-sm">
-      <div className="relative w-full overflow-hidden -mx-4 px-4">
+    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm pt-4 pb-2 border-b border-gray-100 shadow-sm -mx-4 px-4">
+      <div className="relative w-full">
         {/* Gradient overlay for horizontal scroll indication */}
         <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
         <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
         <div 
-          className="flex gap-6 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide whitespace-nowrap"
+          className="flex gap-6 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide"
           style={{ 
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
+            msOverflowStyle: 'none',
+            width: '100%'
           }}
         >
         <button
