@@ -39,7 +39,7 @@ export function CategoryFilter({
         // Kategori bölümüne scroll et
         const element = document.getElementById(`category-${categoryId}`);
         if (element) {
-          const headerHeight = 130; // Header (56px) + kategori filtre (74px) yüksekliği
+          const headerHeight = 146; // Header (56px) + kategori filtre (90px) yüksekliği
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight;
 
@@ -65,8 +65,12 @@ export function CategoryFilter({
   ];
 
   return (
-    <div className="sticky top-14 z-40 mb-8 bg-white/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4">
-      <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
+    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm pt-4 pb-2 -mx-4 px-4 border-b border-gray-100 shadow-sm">
+      <div className="relative">
+        {/* Gradient overlay for horizontal scroll indication */}
+        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide">
         <button
           onClick={() => handleCategoryClick('all')}
           className="flex flex-col items-center gap-2 flex-shrink-0 group"
@@ -108,6 +112,7 @@ export function CategoryFilter({
             </span>
           </button>
         ))}
+        </div>
       </div>
     </div>
   );
