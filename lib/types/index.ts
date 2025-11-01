@@ -1,3 +1,15 @@
+export type AllergyTag = 
+  | 'gluten' 
+  | 'dairy' 
+  | 'nuts' 
+  | 'eggs' 
+  | 'fish' 
+  | 'shellfish' 
+  | 'soy' 
+  | 'sesame' 
+  | 'vegetarian' 
+  | 'vegan';
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -8,6 +20,7 @@ export interface MenuItem {
   category: string;
   imageUrl?: string;
   available: boolean;
+  allergies?: AllergyTag[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,5 +43,6 @@ export interface MenuItemFormData {
   category: string;
   imageFile?: File;
   available: boolean;
+  allergies?: AllergyTag[];
 }
 

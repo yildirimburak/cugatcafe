@@ -76,7 +76,7 @@ export function CategoryFilter({
         // Kategori bölümüne scroll et
         const element = document.getElementById(`category-${categoryId}`);
         if (element) {
-          const headerHeight = 112; // Header (56px) + kategori filtre (56px) yüksekliği
+          const headerHeight = 56; // Kategori filtre yüksekliği
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight;
 
@@ -90,7 +90,7 @@ export function CategoryFilter({
   };
 
   return (
-    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm py-3 border-b border-gray-100 -mx-4 px-4">
+    <div className="sticky top-0 z-40 mb-8 bg-white/95 backdrop-blur-sm py-3 border-b border-gray-100 -mx-4 px-4">
       <div className="flex gap-4 items-center">
         {/* Tümü butonu - sabit kalacak */}
         <button

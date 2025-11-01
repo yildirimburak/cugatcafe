@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "メニュー",
-    "description": "おいしいオプションをご覧ください",
+    "description": "説明",
     "price": "価格",
-    "noItems": "このカテゴリにはまだアイテムがありません"
+    "noItems": "このカテゴリにはまだアイテムがありません",
+    "category": "カテゴリ",
+    "status": "ステータス",
+    "available": "利用可能",
+    "notAvailable": "利用不可",
+    "allergyInfo": "アレルギー情報"
   },
   "admin": {
     "title": "管理パネル",

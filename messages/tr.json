@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "Menümüz",
-    "description": "Lezzetli seçeneklerimizi keşfedin",
+    "description": "Açıklama",
     "price": "Fiyat",
-    "noItems": "Bu kategoride henüz ürün bulunmamaktadır"
+    "noItems": "Bu kategoride henüz ürün bulunmamaktadır",
+    "category": "Kategori",
+    "status": "Durum",
+    "available": "Mevcut",
+    "notAvailable": "Mevcut Değil",
+    "allergyInfo": "Alerji Bilgileri"
   },
   "admin": {
     "title": "Yönetim Paneli",

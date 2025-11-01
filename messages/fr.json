@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "Notre Menu",
-    "description": "Découvrez nos délicieuses options",
+    "description": "Description",
     "price": "Prix",
-    "noItems": "Aucun article dans cette catégorie pour le moment"
+    "noItems": "Aucun article dans cette catégorie pour le moment",
+    "category": "Catégorie",
+    "status": "Statut",
+    "available": "Disponible",
+    "notAvailable": "Non disponible",
+    "allergyInfo": "Informations sur les allergies"
   },
   "admin": {
     "title": "Panneau d'administration",

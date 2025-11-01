@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "قائمتنا",
-    "description": "اكتشف خياراتنا اللذيذة",
+    "description": "الوصف",
     "price": "السعر",
-    "noItems": "لا توجد عناصر في هذه الفئة بعد"
+    "noItems": "لا توجد عناصر في هذه الفئة بعد",
+    "category": "الفئة",
+    "status": "الحالة",
+    "available": "متاح",
+    "notAvailable": "غير متاح",
+    "allergyInfo": "معلومات الحساسية"
   },
   "admin": {
     "title": "لوحة التحكم",

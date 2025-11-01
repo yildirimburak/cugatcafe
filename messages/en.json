@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "Our Menu",
-    "description": "Discover our delicious options",
+    "description": "Description",
     "price": "Price",
-    "noItems": "No items in this category yet"
+    "noItems": "No items in this category yet",
+    "category": "Category",
+    "status": "Status",
+    "available": "Available",
+    "notAvailable": "Not Available",
+    "allergyInfo": "Allergy Information"
   },
   "admin": {
     "title": "Admin Panel",

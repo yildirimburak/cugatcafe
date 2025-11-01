@@ -1,17 +1,35 @@
 'use client';
 
 import Image from 'next/image';
-import { MenuItem } from '@/lib/types';
+import { MenuItem, AllergyTag } from '@/lib/types';
 
 interface MenuCardProps {
   item: MenuItem;
   name: string;
   description: string;
+  onClick?: () => void;
 }
 
-export function MenuCard({ item, name, description }: MenuCardProps) {
+// Alerji tag ikonları ve renkleri
+const allergyInfo: Record<AllergyTag, { icon: string; label: string; color: string }> = {
+  gluten: { icon: '🌾', label: 'Gluten', color: 'bg-amber-100 text-amber-800' },
+  dairy: { icon: '🥛', label: 'Süt', color: 'bg-blue-100 text-blue-800' },
+  nuts: { icon: '🥜', label: 'Fındık', color: 'bg-orange-100 text-orange-800' },
+  eggs: { icon: '🥚', label: 'Yumurta', color: 'bg-yellow-100 text-yellow-800' },
+  fish: { icon: '🐟', label: 'Balık', color: 'bg-cyan-100 text-cyan-800' },
+  shellfish: { icon: '🦐', label: 'Kabuklu', color: 'bg-pink-100 text-pink-800' },
+  soy: { icon: '🫘', label: 'Soya', color: 'bg-green-100 text-green-800' },
+  sesame: { icon: '🌰', label: 'Susam', color: 'bg-amber-100 text-amber-800' },
+  vegetarian: { icon: '🌿', label: 'Vejetaryen', color: 'bg-emerald-100 text-emerald-800' },
+  vegan: { icon: '🥬', label: 'Vegan', color: 'bg-lime-100 text-lime-800' },
+};
+
+export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
   return (
-    <div className="flex items-start gap-4 py-4 border-b border-gray-100 last:border-b-0">
+    <div 
+      className="flex items-start gap-4 py-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50 transition-colors"
+      onClick={onClick}
+    >
       {/* Yuvarlak küçük resim */}
       <div className="flex-shrink-0">
         {item.imageUrl ? (
@@ -40,11 +58,24 @@ export function MenuCard({ item, name, description }: MenuCardProps) {
             <p className="text-sm text-gray-500 mb-2 leading-relaxed">
               {description}
             </p>
-            {/* İkonlar (vejetaryen, vb.) */}
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs text-gray-400">🌿</span>
-              <span className="text-xs text-gray-400">🥚</span>
-            </div>
+            {/* Alerji tag'leri */}
+            {item.allergies && item.allergies.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                {item.allergies.map((allergy) => {
+                  const info = allergyInfo[allergy];
+                  if (!info) return null;
+                  return (
+                    <span
+                      key={allergy}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${info.color}`}
+                      title={info.label}
+                    >
+                      {info.icon}
+                    </span>
+                  );
+                })}
+              </div>
+            )}
           </div>
           
           {/* Fiyat */}

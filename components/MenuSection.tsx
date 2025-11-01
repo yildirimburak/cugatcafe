@@ -2,14 +2,30 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { MenuItem, Category } from '@/lib/types';
+import { MenuItem, Category, AllergyTag } from '@/lib/types';
 import { MenuCard } from './MenuCard';
 import { CategoryFilter } from './CategoryFilter';
 import { getMenuItems, getCategories } from '@/lib/firebase/menu';
+import Image from 'next/image';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface MenuSectionProps {
   locale: string;
 }
+
+// Alerji tag ikonları ve renkleri
+const allergyInfo: Record<AllergyTag, { icon: string; label: string; color: string }> = {
+  gluten: { icon: '🌾', label: 'Gluten', color: 'bg-amber-100 text-amber-800' },
+  dairy: { icon: '🥛', label: 'Süt', color: 'bg-blue-100 text-blue-800' },
+  nuts: { icon: '🥜', label: 'Fındık', color: 'bg-orange-100 text-orange-800' },
+  eggs: { icon: '🥚', label: 'Yumurta', color: 'bg-yellow-100 text-yellow-800' },
+  fish: { icon: '🐟', label: 'Balık', color: 'bg-cyan-100 text-cyan-800' },
+  shellfish: { icon: '🦐', label: 'Kabuklu', color: 'bg-pink-100 text-pink-800' },
+  soy: { icon: '🫘', label: 'Soya', color: 'bg-green-100 text-green-800' },
+  sesame: { icon: '🌰', label: 'Susam', color: 'bg-amber-100 text-amber-800' },
+  vegetarian: { icon: '🌿', label: 'Vejetaryen', color: 'bg-emerald-100 text-emerald-800' },
+  vegan: { icon: '🥬', label: 'Vegan', color: 'bg-lime-100 text-lime-800' },
+};
 
 export function MenuSection({ locale }: MenuSectionProps) {
   const t = useTranslations('menu');
@@ -18,6 +34,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,7 +58,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
   useEffect(() => {
     if (loading || categories.length === 0 || typeof window === 'undefined') return;
 
-    const headerHeight = 112; // Header (56px) + kategori filtre (56px) yüksekliği
+    const headerHeight = 56; // Kategori filtre yüksekliği
     let rafId: number | null = null;
     let ticking = false;
 
@@ -58,7 +75,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
         const menuSection = document.getElementById('menu');
         if (menuSection) {
           const menuRect = menuSection.getBoundingClientRect();
-          if (scrollY < menuRect.top + scrollY - 150) {
+          if (scrollY < menuRect.top + scrollY - 100) {
             setSelectedCategory((prev) => prev !== 'all' ? 'all' : prev);
             return;
           }
@@ -91,8 +108,8 @@ export function MenuSection({ locale }: MenuSectionProps) {
         // Kategorileri pozisyona göre sırala
         allSections.sort((a, b) => a.top - b.top);
 
-        // Header'ın hemen altına geçen en son kategoriyi bul
-        const checkPoint = scrollY + headerHeight + 50; // Header + biraz offset
+        // Kategori filtrenin hemen altına geçen en son kategoriyi bul
+        const checkPoint = scrollY + headerHeight + 50; // Kategori filtre + biraz offset
         let activeCategory: string | null = null;
 
         for (let i = allSections.length - 1; i >= 0; i--) {
@@ -217,7 +234,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
             <div 
               key={category?.id || 'other'} 
               id={category ? `category-${category.id}` : 'other'}
-              className="mb-8 scroll-mt-[112px]"
+              className="mb-8 scroll-mt-[56px]"
             >
               {category && (
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -231,11 +248,108 @@ export function MenuSection({ locale }: MenuSectionProps) {
                     item={item}
                     name={getItemName(item)}
                     description={getItemDescription(item)}
+                    onClick={() => setSelectedItem(item)}
                   />
                 ))}
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Detay Popup */}
+      {selectedItem && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setSelectedItem(null)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center z-10">
+              <h2 className="text-2xl font-bold text-gray-900">
+                {getItemName(selectedItem)}
+              </h2>
+              <button
+                onClick={() => setSelectedItem(null)}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all"
+              >
+                <XMarkIcon className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Resim */}
+              {selectedItem.imageUrl && (
+                <div className="relative w-full h-96 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                  <Image
+                    src={selectedItem.imageUrl}
+                    alt={getItemName(selectedItem)}
+                    fill
+                    className="object-contain p-4"
+                  />
+                </div>
+              )}
+
+              {/* Açıklama */}
+              {getItemDescription(selectedItem) && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                    {t('description')}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {getItemDescription(selectedItem)}
+                  </p>
+                </div>
+              )}
+
+              {/* Detaylar */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                    {t('category')}
+                  </h3>
+                  <p className="text-gray-600">
+                    {getCategoryName(categories.find(c => c.id === selectedItem.category) || null)}
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                    {t('price')}
+                  </h3>
+                  <p className="text-amber-600 font-semibold text-lg">
+                    {selectedItem.price.toFixed(0)} {locale === 'en' ? 'TRY' : 'TL'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Alerji Bilgileri */}
+              {selectedItem.allergies && selectedItem.allergies.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    {t('allergyInfo')}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedItem.allergies.map((allergy) => {
+                      const info = allergyInfo[allergy];
+                      if (!info) return null;
+                      return (
+                        <span
+                          key={allergy}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${info.color}`}
+                          title={info.label}
+                        >
+                          <span className="text-base">{info.icon}</span>
+                          <span>{info.label}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </section>

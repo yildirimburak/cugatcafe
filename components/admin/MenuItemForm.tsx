@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { MenuItem, Category } from '@/lib/types';
+import { MenuItem, Category, AllergyTag } from '@/lib/types';
 import { getEnabledLanguages, Language } from '@/lib/firebase/languages';
 
 interface MenuItemFormProps {
@@ -65,6 +65,20 @@ export function MenuItemForm({
     fetchLanguages();
   }, []);
   
+  // Alerji tag seçenekleri
+  const allergyOptions: Array<{ value: AllergyTag; label: string; icon: string }> = [
+    { value: 'gluten', label: 'Gluten', icon: '🌾' },
+    { value: 'dairy', label: 'Süt Ürünleri', icon: '🥛' },
+    { value: 'nuts', label: 'Fındık/Fıstık', icon: '🥜' },
+    { value: 'eggs', label: 'Yumurta', icon: '🥚' },
+    { value: 'fish', label: 'Balık', icon: '🐟' },
+    { value: 'shellfish', label: 'Kabuklu Deniz Ürünleri', icon: '🦐' },
+    { value: 'soy', label: 'Soya', icon: '🫘' },
+    { value: 'sesame', label: 'Susam', icon: '🌰' },
+    { value: 'vegetarian', label: 'Vejetaryen', icon: '🌿' },
+    { value: 'vegan', label: 'Vegan', icon: '🥬' },
+  ];
+
   // Aktif diller için dinamik form state
   const initialFormData: any = {
     price: '',
@@ -72,6 +86,7 @@ export function MenuItemForm({
     imageFile: null as File | null,
     imageUrl: '',
     available: true,
+    allergies: [] as AllergyTag[],
   };
   
   const [formData, setFormData] = useState(initialFormData);
@@ -85,6 +100,7 @@ export function MenuItemForm({
         imageFile: null,
         imageUrl: '',
         available: true,
+        allergies: [] as AllergyTag[],
       };
       
       // Sadece aktif diller için alanlar oluştur
@@ -98,13 +114,24 @@ export function MenuItemForm({
         data.category = item.category;
         data.imageUrl = item.imageUrl || '';
         data.available = item.available;
+        data.allergies = item.allergies || [];
         
         // Mevcut item'dan sadece aktif diller için değerleri yükle
         enabledLanguages.forEach(lang => {
           const nameKey = `name${lang.code.charAt(0).toUpperCase() + lang.code.slice(1)}`;
           const descKey = `description${lang.code.charAt(0).toUpperCase() + lang.code.slice(1)}`;
-          data[nameKey] = (item as any)[nameKey] || '';
-          data[descKey] = (item as any)[descKey] || '';
+          
+          // Önce yeni formattaki field'ı kontrol et (nameTr, nameEn, vb.)
+          // Yoksa eski formatı kontrol et (name, nameEn, vb.)
+          if (lang.code === 'tr') {
+            // Türkçe için: önce nameTr, sonra name (eski format)
+            data[nameKey] = (item as any)[nameKey] || item.name || '';
+            data[descKey] = (item as any)[descKey] || item.description || '';
+          } else {
+            // Diğer diller için: önce nameEn/nameDe vb., sonra nameEn (eski format)
+            data[nameKey] = (item as any)[nameKey] || (lang.code === 'en' ? item.nameEn : '') || '';
+            data[descKey] = (item as any)[descKey] || (lang.code === 'en' ? (item as any).descriptionEn : '') || '';
+          }
         });
       }
       
@@ -263,6 +290,43 @@ export function MenuItemForm({
               />
             </div>
           )}
+        </div>
+
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+            Alerji Bilgileri
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {allergyOptions.map((allergy) => (
+              <label
+                key={allergy.value}
+                className="flex items-center gap-2 px-3 py-2 border border-slate-300 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-indigo-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                <input
+                  type="checkbox"
+                  checked={formData.allergies?.includes(allergy.value) || false}
+                  onChange={(e) => {
+                    const currentAllergies = formData.allergies || [];
+                    if (e.target.checked) {
+                      setFormData({
+                        ...formData,
+                        allergies: [...currentAllergies, allergy.value],
+                      });
+                    } else {
+                      setFormData({
+                        ...formData,
+                        allergies: currentAllergies.filter((a: AllergyTag) => a !== allergy.value),
+                      });
+                    }
+                  }}
+                  className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
+                />
+                <span className="text-sm text-slate-700 dark:text-slate-300">
+                  {allergy.icon} {allergy.label}
+                </span>
+              </label>
+            ))}
+          </div>
         </div>
 
         <div className="md:col-span-2">

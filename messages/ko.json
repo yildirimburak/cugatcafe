@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "메뉴",
-    "description": "맛있는 옵션을 발견하세요",
+    "description": "설명",
     "price": "가격",
-    "noItems": "이 카테고리에 아직 항목이 없습니다"
+    "noItems": "이 카테고리에 아직 항목이 없습니다",
+    "category": "카테고리",
+    "status": "상태",
+    "available": "사용 가능",
+    "notAvailable": "사용 불가",
+    "allergyInfo": "알레르기 정보"
   },
   "admin": {
     "title": "관리 패널",

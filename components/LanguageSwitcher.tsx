@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname } from '@/routing';
 import { locales, Locale, localeNames } from '@/i18n';
 import { getEnabledLanguages, Language } from '@/lib/firebase/languages';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -40,8 +40,8 @@ export function LanguageSwitcher() {
   }, []);
 
   const switchLocale = (newLocale: string) => {
-    const pathnameWithoutLocale = pathname.replace(`/${locale}`, '') || '/';
-    router.push(`/${newLocale}${pathnameWithoutLocale}`);
+    // next-intl'in useRouter'ı locale parametresi ile kullan
+    router.push(pathname, { locale: newLocale });
     setIsOpen(false);
   };
 
@@ -61,7 +61,7 @@ export function LanguageSwitcher() {
   const currentLanguage = displayLanguages.find(l => l.code === locale) || displayLanguages[0];
 
   return (
-    <div className="relative">
+    <div className="relative z-[60]">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
@@ -76,10 +76,10 @@ export function LanguageSwitcher() {
       {isOpen && !loading && (
         <>
           <div 
-            className="fixed inset-0 z-10" 
+            className="fixed inset-0 z-[50]" 
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border rounded-lg shadow-lg z-20 max-h-64 overflow-y-auto">
+          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border rounded-lg shadow-lg z-[60] max-h-64 overflow-y-auto">
             {displayLanguages.map((lang) => (
               <button
                 key={lang.id}

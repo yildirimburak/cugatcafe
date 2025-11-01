@@ -22,9 +22,14 @@
   },
   "menu": {
     "title": "我们的菜单",
-    "description": "探索我们的美味选择",
+    "description": "描述",
     "price": "价格",
-    "noItems": "此类别中还没有项目"
+    "noItems": "此类别中还没有项目",
+    "category": "类别",
+    "status": "状态",
+    "available": "可用",
+    "notAvailable": "不可用",
+    "allergyInfo": "过敏信息"
   },
   "admin": {
     "title": "管理面板",
