@@ -15,6 +15,11 @@
     "categories": "Kategorien",
     "all": "Alle"
   },
+  "home": {
+    "welcome": "Willkommen",
+    "welcomeMessage": "Entdecken Sie unsere köstliche Speisekarte",
+    "viewMenu": "Menü ansehen"
+  },
   "menu": {
     "title": "Unser Menü",
     "description": "Entdecken Sie unsere köstlichen Optionen",

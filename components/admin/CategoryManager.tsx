@@ -6,6 +6,7 @@ import { Category } from '@/lib/types';
 import { addCategory, updateCategory, deleteCategory } from '@/lib/firebase/menu';
 import { CategoryForm } from './CategoryForm';
 import { CategoryList } from './CategoryList';
+import { locales } from '@/i18n';
 import toast from 'react-hot-toast';
 
 interface CategoryManagerProps {

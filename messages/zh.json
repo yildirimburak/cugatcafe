@@ -15,6 +15,11 @@
     "categories": "类别",
     "all": "全部"
   },
+  "home": {
+    "welcome": "欢迎",
+    "welcomeMessage": "发现我们的美味菜单",
+    "viewMenu": "查看菜单"
+  },
   "menu": {
     "title": "我们的菜单",
     "description": "探索我们的美味选择",

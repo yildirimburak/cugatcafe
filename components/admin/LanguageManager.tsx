@@ -54,7 +54,7 @@ export function LanguageManager({ locale }: LanguageManagerProps) {
       await fetchLanguages();
       setShowForm(false);
       toast.success(t('saveSuccess'));
-      toast.info(`Not: messages/${formData.code.toLowerCase()}.json dosyasını manuel olarak eklemeyi unutmayın!`);
+      toast(`Not: messages/${formData.code.toLowerCase()}.json dosyasını manuel olarak eklemeyi unutmayın!`, { icon: 'ℹ️' });
     } catch (error: any) {
       toast.error(error.message || 'Bir hata oluştu');
     }

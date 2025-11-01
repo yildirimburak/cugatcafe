@@ -15,6 +15,11 @@
     "categories": "카테고리",
     "all": "전체"
   },
+  "home": {
+    "welcome": "환영합니다",
+    "welcomeMessage": "맛있는 메뉴를 발견하세요",
+    "viewMenu": "메뉴 보기"
+  },
   "menu": {
     "title": "메뉴",
     "description": "맛있는 옵션을 발견하세요",

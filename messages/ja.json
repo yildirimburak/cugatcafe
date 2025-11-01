@@ -15,6 +15,11 @@
     "categories": "カテゴリ",
     "all": "すべて"
   },
+  "home": {
+    "welcome": "いらっしゃいませ",
+    "welcomeMessage": "おいしいメニューをご覧ください",
+    "viewMenu": "メニューを見る"
+  },
   "menu": {
     "title": "メニュー",
     "description": "おいしいオプションをご覧ください",

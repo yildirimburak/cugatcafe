@@ -15,6 +15,11 @@
     "categories": "Categorías",
     "all": "Todos"
   },
+  "home": {
+    "welcome": "Bienvenido",
+    "welcomeMessage": "Descubre nuestro delicioso menú",
+    "viewMenu": "Ver Menú"
+  },
   "menu": {
     "title": "Nuestro Menú",
     "description": "Descubre nuestras deliciosas opciones",

@@ -15,6 +15,11 @@
     "categories": "الفئات",
     "all": "الكل"
   },
+  "home": {
+    "welcome": "مرحباً",
+    "welcomeMessage": "اكتشف قائمتنا اللذيذة",
+    "viewMenu": "عرض القائمة"
+  },
   "menu": {
     "title": "قائمتنا",
     "description": "اكتشف خياراتنا اللذيذة",
