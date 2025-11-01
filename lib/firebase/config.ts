@@ -18,19 +18,34 @@ function getFirebaseApp() {
     throw new Error('Firebase can only be initialized on the client side');
   }
   
-  // Validate Firebase config
-  if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'your_api_key_here') {
-    throw new Error(
-      'Firebase yapılandırması eksik! Lütfen .env.local dosyasını oluşturup Firebase config değerlerinizi ekleyin.\n' +
-      'Firebase Console: https://console.firebase.google.com/\n' +
-      'Project Settings > Your apps > Web app config bölümünden config değerlerinizi alabilirsiniz.'
-    );
+  // Validate Firebase config - check if any required field is missing
+  const requiredFields = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+  const missingFields = requiredFields.filter(field => !firebaseConfig[field as keyof typeof firebaseConfig]);
+  
+  if (missingFields.length > 0 || !firebaseConfig.apiKey || firebaseConfig.apiKey === 'your_api_key_here') {
+    const errorMessage = `Firebase yapılandırması eksik! Eksik alanlar: ${missingFields.join(', ')}\n` +
+      `Lütfen Vercel'de Environment Variables ayarlayın:\n` +
+      `- NEXT_PUBLIC_FIREBASE_API_KEY\n` +
+      `- NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN\n` +
+      `- NEXT_PUBLIC_FIREBASE_PROJECT_ID\n` +
+      `- NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET\n` +
+      `- NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID\n` +
+      `- NEXT_PUBLIC_FIREBASE_APP_ID\n\n` +
+      `Firebase Console: https://console.firebase.google.com/`;
+    
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
   
-  if (getApps().length === 0) {
-    return initializeApp(firebaseConfig);
+  try {
+    if (getApps().length === 0) {
+      return initializeApp(firebaseConfig);
+    }
+    return getApps()[0];
+  } catch (error) {
+    console.error('Firebase initialization error:', error);
+    throw error;
   }
-  return getApps()[0];
 }
 
 // Lazy initialization - only when needed
