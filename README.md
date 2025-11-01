@@ -108,8 +108,21 @@ service cloud.firestore {
 1. Projeyi GitHub'a push edin
 2. Vercel'e giriş yapın ve yeni proje oluşturun
 3. GitHub repository'nizi seçin
-4. Environment variables'ları ekleyin (Firebase config)
+4. **ÖNEMLİ: Environment Variables'ları ekleyin** (Firebase config)
+   
+   Vercel Dashboard → Project Settings → Environment Variables sekmesine gidin ve şu değişkenleri ekleyin:
+   - `NEXT_PUBLIC_FIREBASE_API_KEY`
+   - `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+   - `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+   - `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+   - `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+   - `NEXT_PUBLIC_FIREBASE_APP_ID`
+   
+   **Not:** Tüm değişkenler için "Production", "Preview" ve "Development" ortamlarını seçtiğinizden emin olun.
+   
 5. Deploy edin!
+
+**Hata alıyorsanız:** Browser console'u kontrol edin. Firebase config eksikse, hata mesajında hangi environment variables'ların eksik olduğu belirtilir.
 
 Veya Vercel CLI ile:
 ```bash
