@@ -41,7 +41,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
   useEffect(() => {
     if (loading || categories.length === 0 || typeof window === 'undefined') return;
 
-    const headerHeight = 146; // Header (56px) + kategori filtre (90px) yüksekliği
+    const headerHeight = 112; // Header (56px) + kategori filtre (56px) yüksekliği
     let rafId: number | null = null;
     let ticking = false;
 
@@ -217,7 +217,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
             <div 
               key={category?.id || 'other'} 
               id={category ? `category-${category.id}` : 'other'}
-              className="mb-8 scroll-mt-[146px]"
+              className="mb-8 scroll-mt-[112px]"
             >
               {category && (
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Category } from '@/lib/types';
 import { type Locale } from '@/i18n';
@@ -18,6 +19,7 @@ export function CategoryFilter({
   locale
 }: CategoryFilterProps) {
   const t = useTranslations('common');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const getCategoryName = (category: Category) => {
     // Dinamik olarak locale'a göre name alanını bul
@@ -26,6 +28,41 @@ export function CategoryFilter({
     const translatedName = (category as any)[nameKey];
     return translatedName || category.name; // Fallback to Turkish
   };
+
+  // Seçili kategori değiştiğinde, butonu scroll container içinde görünür yap
+  useEffect(() => {
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    
+    // Seçili kategori butonunu bul (data-category-id attribute ile)
+    const selectedButton = container.querySelector(
+      `button[data-category-id="${selectedCategory}"]`
+    ) as HTMLButtonElement;
+
+    if (!selectedButton) return;
+
+    // Kısa bir delay ile scroll et (DOM'un güncellenmesi için)
+    setTimeout(() => {
+      const buttonRect = selectedButton.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      // Buton container'ın dışındaysa scroll et
+      if (buttonRect.left < containerRect.left) {
+        // Buton solda dışarıda, sola scroll et
+        container.scrollTo({
+          left: container.scrollLeft + (buttonRect.left - containerRect.left) - 16,
+          behavior: 'smooth'
+        });
+      } else if (buttonRect.right > containerRect.right) {
+        // Buton sağda dışarıda, sağa scroll et
+        container.scrollTo({
+          left: container.scrollLeft + (buttonRect.right - containerRect.right) + 16,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  }, [selectedCategory]);
 
   const handleCategoryClick = (categoryId: string) => {
     onSelectCategory(categoryId);
@@ -39,7 +76,7 @@ export function CategoryFilter({
         // Kategori bölümüne scroll et
         const element = document.getElementById(`category-${categoryId}`);
         if (element) {
-          const headerHeight = 146; // Header (56px) + kategori filtre (90px) yüksekliği
+          const headerHeight = 112; // Header (56px) + kategori filtre (56px) yüksekliği
           const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
           const offsetPosition = elementPosition - headerHeight;
 
@@ -52,74 +89,46 @@ export function CategoryFilter({
     }, 150);
   };
 
-  // Kategori ikonları için renkli gradient'ler
-  const categoryColors = [
-    'bg-gradient-to-br from-pink-400 to-red-500',
-    'bg-gradient-to-br from-yellow-400 to-orange-500',
-    'bg-gradient-to-br from-blue-400 to-purple-500',
-    'bg-gradient-to-br from-green-400 to-teal-500',
-    'bg-gradient-to-br from-indigo-400 to-pink-500',
-    'bg-gradient-to-br from-amber-400 to-yellow-500',
-    'bg-gradient-to-br from-cyan-400 to-blue-500',
-    'bg-gradient-to-br from-rose-400 to-pink-500',
-  ];
-
   return (
-    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm pt-4 pb-2 border-b border-gray-100 shadow-sm -mx-4 px-4">
-      <div className="relative w-full">
-        {/* Gradient overlay for horizontal scroll indication */}
-        <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
-        <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+    <div className="sticky top-[56px] z-40 mb-8 bg-white/95 backdrop-blur-sm py-3 border-b border-gray-100 -mx-4 px-4">
+      <div className="flex gap-4 items-center">
+        {/* Tümü butonu - sabit kalacak */}
+        <button
+          data-category-id="all"
+          onClick={() => handleCategoryClick('all')}
+          className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
+            selectedCategory === 'all'
+              ? 'bg-gray-900 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {t('all')}
+        </button>
+        
+        {/* Diğer kategoriler - scroll edilebilir */}
         <div 
-          className="flex gap-6 overflow-x-auto overflow-y-hidden pb-4 scrollbar-hide"
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide flex-1"
           style={{ 
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            width: '100%'
+            msOverflowStyle: 'none'
           }}
         >
-        <button
-          onClick={() => handleCategoryClick('all')}
-          className="flex flex-col items-center gap-2 flex-shrink-0 group"
-        >
-          <div
-            className={`w-16 h-16 rounded-lg bg-gradient-to-br from-gray-400 to-gray-600 transition-transform group-hover:scale-110 ${
-              selectedCategory === 'all' ? 'ring-2 ring-gray-900 ring-offset-2' : ''
-            }`}
-          />
-          <span
-            className={`text-xs text-center max-w-[80px] ${
-              selectedCategory === 'all'
-                ? 'text-gray-900 font-semibold'
-                : 'text-gray-600'
-            }`}
-          >
-            {t('all')}
-          </span>
-        </button>
-        {categories.map((category, index) => (
-          <button
-            key={category.id}
-            onClick={() => handleCategoryClick(category.id)}
-            className="flex flex-col items-center gap-2 flex-shrink-0 group"
-          >
-            <div
-              className={`w-16 h-16 rounded-lg ${categoryColors[index % categoryColors.length]} transition-transform group-hover:scale-110 ${
-                selectedCategory === category.id ? 'ring-2 ring-gray-900 ring-offset-2' : ''
-              }`}
-            />
-            <span
-              className={`text-xs text-center max-w-[80px] ${
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              data-category-id={category.id}
+              onClick={() => handleCategoryClick(category.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
                 selectedCategory === category.id
-                  ? 'text-gray-900 font-semibold'
-                  : 'text-gray-600'
+                  ? 'bg-gray-900 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
               {getCategoryName(category)}
-            </span>
-          </button>
-        ))}
+            </button>
+          ))}
         </div>
       </div>
     </div>
