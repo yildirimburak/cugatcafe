@@ -79,7 +79,8 @@ export function BusinessInfoSection({ locale }: BusinessInfoProps) {
   };
 
   const formatWorkingHours = () => {
-    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    if (!businessInfo) return [];
+    const days: Array<keyof typeof businessInfo.workingHours> = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     return days.map((day) => {
       const hours = businessInfo.workingHours[day];
       if (!hours || hours.closed) {

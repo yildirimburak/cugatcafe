@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { BusinessInfo, getBusinessInfo, updateBusinessInfo } from '@/lib/firebase/business';
+import type { BusinessInfo as BusinessInfoType } from '@/lib/firebase/business';
 import toast from 'react-hot-toast';
 
 interface BusinessManagerProps {
@@ -40,24 +41,35 @@ export function BusinessManager({ locale }: BusinessManagerProps) {
   useEffect(() => {
     async function fetchBusinessInfo() {
       try {
-        const info = await getBusinessInfo();
-        if (info) {
-          setBusinessInfo(info);
-          setFormData({
-            name: info.name || '',
-            nameEn: info.nameEn || '',
-            address: info.address || '',
-            addressEn: info.addressEn || '',
-            phone: info.phone || '',
-            email: info.email || '',
-            googleMapsUrl: info.googleMapsUrl || '',
-            googlePlaceId: info.googlePlaceId || '',
-            instagram: info.socialMedia?.instagram || '',
-            facebook: info.socialMedia?.facebook || '',
-            twitter: info.socialMedia?.twitter || '',
-            workingHours: info.workingHours || formData.workingHours,
-          });
-        }
+            const info = await getBusinessInfo();
+            if (info) {
+              setBusinessInfo(info);
+              // workingHours'ı düzgün formatla (closed undefined ise false yap)
+              const formattedWorkingHours = {
+                monday: { ...info.workingHours.monday, closed: info.workingHours.monday.closed ?? false },
+                tuesday: { ...info.workingHours.tuesday, closed: info.workingHours.tuesday.closed ?? false },
+                wednesday: { ...info.workingHours.wednesday, closed: info.workingHours.wednesday.closed ?? false },
+                thursday: { ...info.workingHours.thursday, closed: info.workingHours.thursday.closed ?? false },
+                friday: { ...info.workingHours.friday, closed: info.workingHours.friday.closed ?? false },
+                saturday: { ...info.workingHours.saturday, closed: info.workingHours.saturday.closed ?? false },
+                sunday: { ...info.workingHours.sunday, closed: info.workingHours.sunday.closed ?? false },
+              };
+              
+              setFormData({
+                name: info.name || '',
+                nameEn: info.nameEn || '',
+                address: info.address || '',
+                addressEn: info.addressEn || '',
+                phone: info.phone || '',
+                email: info.email || '',
+                googleMapsUrl: info.googleMapsUrl || '',
+                googlePlaceId: info.googlePlaceId || '',
+                instagram: info.socialMedia?.instagram || '',
+                facebook: info.socialMedia?.facebook || '',
+                twitter: info.socialMedia?.twitter || '',
+                workingHours: formattedWorkingHours,
+              });
+            }
       } catch (error) {
         console.error('Error fetching business info:', error);
         toast.error('İşletme bilgileri yüklenirken hata oluştu');
@@ -73,6 +85,17 @@ export function BusinessManager({ locale }: BusinessManagerProps) {
     setSaving(true);
 
     try {
+      // workingHours'ı optional closed ile formatla
+      const formattedWorkingHours: BusinessInfoType['workingHours'] = {
+        monday: { ...formData.workingHours.monday, closed: formData.workingHours.monday.closed || undefined },
+        tuesday: { ...formData.workingHours.tuesday, closed: formData.workingHours.tuesday.closed || undefined },
+        wednesday: { ...formData.workingHours.wednesday, closed: formData.workingHours.wednesday.closed || undefined },
+        thursday: { ...formData.workingHours.thursday, closed: formData.workingHours.thursday.closed || undefined },
+        friday: { ...formData.workingHours.friday, closed: formData.workingHours.friday.closed || undefined },
+        saturday: { ...formData.workingHours.saturday, closed: formData.workingHours.saturday.closed || undefined },
+        sunday: { ...formData.workingHours.sunday, closed: formData.workingHours.sunday.closed || undefined },
+      };
+
       await updateBusinessInfo({
         name: formData.name,
         nameEn: formData.nameEn || undefined,
@@ -82,7 +105,7 @@ export function BusinessManager({ locale }: BusinessManagerProps) {
         email: formData.email || undefined,
         googleMapsUrl: formData.googleMapsUrl || undefined,
         googlePlaceId: formData.googlePlaceId || undefined,
-        workingHours: formData.workingHours,
+        workingHours: formattedWorkingHours,
         socialMedia: {
           instagram: formData.instagram || undefined,
           facebook: formData.facebook || undefined,
@@ -104,7 +127,7 @@ export function BusinessManager({ locale }: BusinessManagerProps) {
     }
   };
 
-  const updateWorkingHours = (day: string, field: 'open' | 'close' | 'closed', value: string | boolean) => {
+  const updateWorkingHours = (day: keyof typeof formData.workingHours, field: 'open' | 'close' | 'closed', value: string | boolean) => {
     setFormData(prev => ({
       ...prev,
       workingHours: {
@@ -117,7 +140,7 @@ export function BusinessManager({ locale }: BusinessManagerProps) {
     }));
   };
 
-  const days = [
+  const days: Array<{ key: keyof typeof formData.workingHours; label: string }> = [
     { key: 'monday', label: 'Pazartesi' },
     { key: 'tuesday', label: 'Salı' },
     { key: 'wednesday', label: 'Çarşamba' },
