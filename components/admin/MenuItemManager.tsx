@@ -50,23 +50,20 @@ export function MenuItemManager({
         }
       }
 
-      // Tüm diller için dinamik itemData oluştur
+      // FormData'dan gelen tüm alanları kullan (sadece aktif diller için alanlar var)
+      // imageFile'ı hariç tut
+      const { imageFile, ...itemDataWithoutFile } = formData;
+      
       const itemData: any = {
+        ...itemDataWithoutFile,
         price: parseFloat(formData.price),
         category: formData.category,
         imageUrl: imageUrl || '',
         available: formData.available !== false,
         allergies: formData.allergies || [],
       };
-      
-      // Her dil için name ve description alanlarını ekle
-      locales.forEach((loc: string) => {
-        const nameKey = `name${loc.charAt(0).toUpperCase() + loc.slice(1)}`;
-        const descKey = `description${loc.charAt(0).toUpperCase() + loc.slice(1)}`;
-        itemData[nameKey] = formData[nameKey] || '';
-        itemData[descKey] = formData[descKey] || '';
-      });
 
+      console.log('Eklenen veri:', itemData);
       const id = await addMenuItem(itemData);
       const newItem: MenuItem = {
         id,
@@ -98,23 +95,21 @@ export function MenuItemManager({
         }
       }
 
-      // Tüm diller için dinamik updateData oluştur
+      // FormData'dan gelen tüm alanları kullan (sadece aktif diller için alanlar var)
+      // imageFile'ı hariç tut ve temel alanları override et
+      const { imageFile, price, category, imageUrl: formImageUrl, available, allergies, ...restFormData } = formData;
+      
       const updateData: any = {
+        ...restFormData, // nameTr, nameEn, descriptionTr, descriptionEn vb. tüm dil alanları burada
         price: parseFloat(formData.price),
         category: formData.category,
         imageUrl: imageUrl || formData.imageUrl,
         available: formData.available !== false,
         allergies: formData.allergies || [],
       };
-      
-      // Her dil için name ve description alanlarını ekle
-      locales.forEach((loc: string) => {
-        const nameKey = `name${loc.charAt(0).toUpperCase() + loc.slice(1)}`;
-        const descKey = `description${loc.charAt(0).toUpperCase() + loc.slice(1)}`;
-        updateData[nameKey] = formData[nameKey] || '';
-        updateData[descKey] = formData[descKey] || '';
-      });
 
+      console.log('Güncellenecek veri (tüm alanlar):', updateData);
+      console.log('Rest form data (dil alanları):', restFormData);
       await updateMenuItem(id, updateData);
 
       onItemsChange(
@@ -316,6 +311,7 @@ export function MenuItemManager({
           setEditingItem(item);
           setShowForm(true);
         }}
+        onUpdate={handleEdit}
         onDelete={handleDelete}
         locale={locale}
       />

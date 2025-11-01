@@ -29,7 +29,19 @@
     "status": "状态",
     "available": "可用",
     "notAvailable": "不可用",
-    "allergyInfo": "过敏信息"
+    "allergyInfo": "过敏信息",
+    "allergies": {
+      "gluten": "麸质",
+      "dairy": "乳制品",
+      "nuts": "坚果",
+      "eggs": "鸡蛋",
+      "fish": "鱼",
+      "shellfish": "贝类",
+      "soy": "大豆",
+      "sesame": "芝麻",
+      "vegetarian": "素食",
+      "vegan": "纯素"
+    }
   },
   "admin": {
     "title": "管理面板",

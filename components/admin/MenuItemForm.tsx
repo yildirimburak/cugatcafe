@@ -158,6 +158,7 @@ export function MenuItemForm({
       return;
     }
     
+    console.log('FormData gönderiliyor:', formData);
     onSave(formData);
   };
 

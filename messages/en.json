@@ -3,6 +3,8 @@
     "menu": "Menu",
     "home": "Home",
     "admin": "Admin",
+    "siteName": "Cugat Cafe",
+    "siteTagline": "Taste Station",
     "login": "Login",
     "logout": "Logout",
     "language": "Language",
@@ -18,7 +20,28 @@
   "home": {
     "welcome": "Welcome",
     "welcomeMessage": "Discover our delicious menu",
-    "viewMenu": "View Menu"
+    "tagline": "Fresh ingredients, carefully prepared flavors",
+    "viewMenu": "View Menu",
+    "whyChooseUs": "Why Choose Us?",
+    "whyChooseUsDesc": "Quality and flavor in every detail",
+    "feature1Title": "Fresh Ingredients",
+    "feature1Desc": "Delicious dishes prepared with daily fresh ingredients",
+    "feature2Title": "Quick Service",
+    "feature2Desc": "Fast and quality service guarantee",
+    "feature3Title": "Made with Love",
+    "feature3Desc": "Every product is carefully prepared with love",
+    "feature4Title": "Cozy Atmosphere",
+    "feature4Desc": "A warm and comfortable environment",
+    "businessInfo": "Contact Information",
+    "contact": "Contact",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "workingHours": "Working Hours",
+    "closed": "Closed",
+    "viewOnMap": "View on Map",
+    "socialMedia": "Social Media",
+    "contactUs": "Get in touch with us"
   },
   "menu": {
     "title": "Our Menu",
@@ -29,7 +52,19 @@
     "status": "Status",
     "available": "Available",
     "notAvailable": "Not Available",
-    "allergyInfo": "Allergy Information"
+    "allergyInfo": "Allergy Information",
+    "allergies": {
+      "gluten": "Gluten",
+      "dairy": "Dairy",
+      "nuts": "Nuts",
+      "eggs": "Eggs",
+      "fish": "Fish",
+      "shellfish": "Shellfish",
+      "soy": "Soy",
+      "sesame": "Sesame",
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan"
+    }
   },
   "admin": {
     "title": "Admin Panel",

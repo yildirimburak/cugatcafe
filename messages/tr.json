@@ -3,6 +3,8 @@
     "menu": "Menü",
     "home": "Ana Sayfa",
     "admin": "Yönetim",
+    "siteName": "Cugat Cafe",
+    "siteTagline": "Lezzet Durağı",
     "login": "Giriş Yap",
     "logout": "Çıkış Yap",
     "language": "Dil",
@@ -18,7 +20,28 @@
   "home": {
     "welcome": "Hoş Geldiniz",
     "welcomeMessage": "Lezzetli menümüzü keşfedin",
-    "viewMenu": "Menüyü Görüntüle"
+    "tagline": "Taze malzemeler, özenle hazırlanmış lezzetler",
+    "viewMenu": "Menüyü Görüntüle",
+    "whyChooseUs": "Neden Bizi Seçmelisiniz?",
+    "whyChooseUsDesc": "Her detayda kalite ve lezzet",
+    "feature1Title": "Taze İçerikler",
+    "feature1Desc": "Günlük taze malzemelerle hazırlanan lezzetler",
+    "feature2Title": "Hızlı Servis",
+    "feature2Desc": "Hızlı ve kaliteli hizmet garantisi",
+    "feature3Title": "Sevgi ile Hazırlanır",
+    "feature3Desc": "Her ürünümüz özenle ve sevgiyle hazırlanır",
+    "feature4Title": "Sıcacık Ortam",
+    "feature4Desc": "Samimi ve konforlu bir atmosfer",
+    "businessInfo": "İletişim Bilgileri",
+    "contact": "İletişim",
+    "address": "Adres",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "workingHours": "Çalışma Saatleri",
+    "closed": "Kapalı",
+    "viewOnMap": "Haritada Görüntüle",
+    "socialMedia": "Sosyal Medya",
+    "contactUs": "Bizimle iletişime geçin"
   },
   "menu": {
     "title": "Menümüz",
@@ -29,7 +52,19 @@
     "status": "Durum",
     "available": "Mevcut",
     "notAvailable": "Mevcut Değil",
-    "allergyInfo": "Alerji Bilgileri"
+    "allergyInfo": "Alerji Bilgileri",
+    "allergies": {
+      "gluten": "Gluten",
+      "dairy": "Süt",
+      "nuts": "Fındık",
+      "eggs": "Yumurta",
+      "fish": "Balık",
+      "shellfish": "Kabuklu",
+      "soy": "Soya",
+      "sesame": "Susam",
+      "vegetarian": "Vejetaryen",
+      "vegan": "Vegan"
+    }
   },
   "admin": {
     "title": "Yönetim Paneli",

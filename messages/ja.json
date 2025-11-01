@@ -29,7 +29,19 @@
     "status": "ステータス",
     "available": "利用可能",
     "notAvailable": "利用不可",
-    "allergyInfo": "アレルギー情報"
+    "allergyInfo": "アレルギー情報",
+    "allergies": {
+      "gluten": "グルテン",
+      "dairy": "乳製品",
+      "nuts": "ナッツ",
+      "eggs": "卵",
+      "fish": "魚",
+      "shellfish": "甲殻類",
+      "soy": "大豆",
+      "sesame": "ごま",
+      "vegetarian": "ベジタリアン",
+      "vegan": "ビーガン"
+    }
   },
   "admin": {
     "title": "管理パネル",

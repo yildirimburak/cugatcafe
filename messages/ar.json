@@ -29,7 +29,19 @@
     "status": "الحالة",
     "available": "متاح",
     "notAvailable": "غير متاح",
-    "allergyInfo": "معلومات الحساسية"
+    "allergyInfo": "معلومات الحساسية",
+    "allergies": {
+      "gluten": "الغلوتين",
+      "dairy": "منتجات الألبان",
+      "nuts": "المكسرات",
+      "eggs": "البيض",
+      "fish": "السمك",
+      "shellfish": "المأكولات البحرية",
+      "soy": "الصويا",
+      "sesame": "السمسم",
+      "vegetarian": "نباتي",
+      "vegan": "نباتي صرف"
+    }
   },
   "admin": {
     "title": "لوحة التحكم",

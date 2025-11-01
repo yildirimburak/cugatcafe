@@ -14,17 +14,17 @@ interface MenuSectionProps {
 }
 
 // Alerji tag ikonları ve renkleri
-const allergyInfo: Record<AllergyTag, { icon: string; label: string; color: string }> = {
-  gluten: { icon: '🌾', label: 'Gluten', color: 'bg-amber-100 text-amber-800' },
-  dairy: { icon: '🥛', label: 'Süt', color: 'bg-blue-100 text-blue-800' },
-  nuts: { icon: '🥜', label: 'Fındık', color: 'bg-orange-100 text-orange-800' },
-  eggs: { icon: '🥚', label: 'Yumurta', color: 'bg-yellow-100 text-yellow-800' },
-  fish: { icon: '🐟', label: 'Balık', color: 'bg-cyan-100 text-cyan-800' },
-  shellfish: { icon: '🦐', label: 'Kabuklu', color: 'bg-pink-100 text-pink-800' },
-  soy: { icon: '🫘', label: 'Soya', color: 'bg-green-100 text-green-800' },
-  sesame: { icon: '🌰', label: 'Susam', color: 'bg-amber-100 text-amber-800' },
-  vegetarian: { icon: '🌿', label: 'Vejetaryen', color: 'bg-emerald-100 text-emerald-800' },
-  vegan: { icon: '🥬', label: 'Vegan', color: 'bg-lime-100 text-lime-800' },
+const allergyInfo: Record<AllergyTag, { icon: string; color: string }> = {
+  gluten: { icon: '🌾', color: 'bg-amber-100 text-amber-800' },
+  dairy: { icon: '🥛', color: 'bg-blue-100 text-blue-800' },
+  nuts: { icon: '🥜', color: 'bg-orange-100 text-orange-800' },
+  eggs: { icon: '🥚', color: 'bg-yellow-100 text-yellow-800' },
+  fish: { icon: '🐟', color: 'bg-cyan-100 text-cyan-800' },
+  shellfish: { icon: '🦐', color: 'bg-pink-100 text-pink-800' },
+  soy: { icon: '🫘', color: 'bg-green-100 text-green-800' },
+  sesame: { icon: '🌰', color: 'bg-amber-100 text-amber-800' },
+  vegetarian: { icon: '🌿', color: 'bg-emerald-100 text-emerald-800' },
+  vegan: { icon: '🥬', color: 'bg-lime-100 text-lime-800' },
 };
 
 export function MenuSection({ locale }: MenuSectionProps) {
@@ -36,22 +36,44 @@ export function MenuSection({ locale }: MenuSectionProps) {
   const [isScrolling, setIsScrolling] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const [menuItems, categoryList] = await Promise.all([
-          getMenuItems(),
-          getCategories()
-        ]);
-        setItems(menuItems);
-        setCategories(categoryList);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const [menuItems, categoryList] = await Promise.all([
+        getMenuItems(),
+        getCategories()
+      ]);
+      setItems(menuItems);
+      setCategories(categoryList);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
     fetchData();
+    
+    // Sayfa focus olduğunda verileri yenile
+    const handleFocus = () => {
+      fetchData();
+    };
+    
+    // Sayfa görünür olduğunda da yenile (visibility API)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchData();
+      }
+    };
+    
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   // Scroll spy: Hangi kategori görünürse onu seç
@@ -159,18 +181,24 @@ export function MenuSection({ locale }: MenuSectionProps) {
 
   const getItemName = (item: MenuItem) => {
     // Dinamik olarak locale'a göre name alanını bul
-    if (locale === 'tr') return item.name;
+    if (locale === 'tr') {
+      // Türkçe için önce nameTr field'ını dene (yeni format), sonra name (eski format), sonra nameEn
+      return (item as any).nameTr || item.name || (item as any).nameEn || 'İsimsiz';
+    }
     const nameKey = `name${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof MenuItem;
     const translatedName = (item as any)[nameKey];
-    return translatedName || item.name; // Fallback to Turkish
+    // Önce çevrilmiş ismi dene, sonra nameTr (yeni Türkçe format), sonra name (eski Türkçe format), en son nameEn
+    return translatedName || (item as any).nameTr || item.name || (item as any).nameEn || 'İsimsiz';
   };
 
   const getItemDescription = (item: MenuItem) => {
     // Dinamik olarak locale'a göre description alanını bul
-    if (locale === 'tr') return item.description;
+    if (locale === 'tr') {
+      return (item as any).descriptionTr || item.description || (item as any).descriptionEn || '';
+    }
     const descKey = `description${locale.charAt(0).toUpperCase() + locale.slice(1)}` as keyof MenuItem;
     const translatedDesc = (item as any)[descKey];
-    return translatedDesc || item.description; // Fallback to Turkish
+    return translatedDesc || (item as any).descriptionTr || item.description || (item as any).descriptionEn || '';
   };
 
   const getCategoryName = (category: Category | null) => {
@@ -334,14 +362,15 @@ export function MenuSection({ locale }: MenuSectionProps) {
                     {selectedItem.allergies.map((allergy) => {
                       const info = allergyInfo[allergy];
                       if (!info) return null;
+                      const label = t(`allergies.${allergy}`);
                       return (
                         <span
                           key={allergy}
                           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${info.color}`}
-                          title={info.label}
+                          title={label}
                         >
                           <span className="text-base">{info.icon}</span>
-                          <span>{info.label}</span>
+                          <span>{label}</span>
                         </span>
                       );
                     })}

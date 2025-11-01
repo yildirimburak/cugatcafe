@@ -9,38 +9,44 @@ import { LoginForm } from './LoginForm';
 import { MenuItemManager } from './MenuItemManager';
 import { CategoryManager } from './CategoryManager';
 import { LanguageManager } from './LanguageManager';
-import { Header } from '@/components/Header';
-import { getMenuItems, getCategories } from '@/lib/firebase/menu';
+import { BusinessManager } from './BusinessManager';
+import { subscribeToMenuItems, subscribeToCategories } from '@/lib/firebase/menu';
 
 interface AdminPanelProps {
   locale: string;
 }
 
 export function AdminPanel({ locale }: AdminPanelProps) {
+  // Admin paneli her zaman Türkçe
+  const adminLocale = 'tr';
   const t = useTranslations('admin');
   const { user, loading } = useAuth();
   const [items, setItems] = useState<MenuItem[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [activeTab, setActiveTab] = useState<'items' | 'categories' | 'languages'>('items');
+  const [activeTab, setActiveTab] = useState<'items' | 'categories' | 'languages' | 'business'>('items');
   const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
-      async function fetchData() {
-        try {
-          const [menuItems, categoryList] = await Promise.all([
-            getMenuItems(),
-            getCategories()
-          ]);
-          setItems(menuItems);
-          setCategories(categoryList);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        } finally {
-          setDataLoading(false);
-        }
-      }
-      fetchData();
+      setDataLoading(true);
+      
+      // Real-time listeners
+      const unsubscribeItems = subscribeToMenuItems((menuItems) => {
+        console.log('Admin Panel: Menu items updated:', menuItems.length);
+        setItems(menuItems);
+        setDataLoading(false);
+      });
+      
+      const unsubscribeCategories = subscribeToCategories((categoryList) => {
+        console.log('Admin Panel: Categories updated:', categoryList.length);
+        setCategories(categoryList);
+      });
+      
+      // Cleanup
+      return () => {
+        unsubscribeItems();
+        unsubscribeCategories();
+      };
     }
   }, [user]);
 
@@ -58,8 +64,7 @@ export function AdminPanel({ locale }: AdminPanelProps) {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
-        <Header />
-        <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+        <div className="flex items-center justify-center min-h-screen">
           <LoginForm />
         </div>
       </div>
@@ -68,8 +73,6 @@ export function AdminPanel({ locale }: AdminPanelProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
-      <Header />
-      
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
@@ -113,6 +116,16 @@ export function AdminPanel({ locale }: AdminPanelProps) {
               >
                 Diller
               </button>
+              <button
+                onClick={() => setActiveTab('business')}
+                className={`px-6 py-3 font-medium transition-all rounded-lg ${
+                  activeTab === 'business'
+                    ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-md'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white/50 dark:hover:bg-gray-700/50'
+                }`}
+              >
+                İşletme Bilgileri
+              </button>
             </div>
           </div>
 
@@ -122,16 +135,18 @@ export function AdminPanel({ locale }: AdminPanelProps) {
                 items={items}
                 categories={categories}
                 onItemsChange={setItems}
-                locale={locale}
+                locale={adminLocale}
               />
             ) : activeTab === 'categories' ? (
               <CategoryManager
                 categories={categories}
                 onCategoriesChange={setCategories}
-                locale={locale}
+                locale={adminLocale}
               />
+            ) : activeTab === 'languages' ? (
+              <LanguageManager locale={adminLocale} />
             ) : (
-              <LanguageManager locale={locale} />
+              <BusinessManager locale={adminLocale} />
             )}
           </div>
         </div>

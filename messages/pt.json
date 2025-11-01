@@ -29,7 +29,19 @@
     "status": "Status",
     "available": "Disponível",
     "notAvailable": "Indisponível",
-    "allergyInfo": "Informações sobre alergias"
+    "allergyInfo": "Informações sobre alergias",
+    "allergies": {
+      "gluten": "Glúten",
+      "dairy": "Laticínios",
+      "nuts": "Nozes",
+      "eggs": "Ovos",
+      "fish": "Peixe",
+      "shellfish": "Frutos do mar",
+      "soy": "Soja",
+      "sesame": "Gergelim",
+      "vegetarian": "Vegetariano",
+      "vegan": "Vegano"
+    }
   },
   "admin": {
     "title": "Painel de Administração",

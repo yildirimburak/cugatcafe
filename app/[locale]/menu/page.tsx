@@ -2,6 +2,10 @@ import { getTranslations } from 'next-intl/server';
 import { MenuSection } from '@/components/MenuSection';
 import { MenuHeader } from '@/components/MenuHeader';
 
+// Sayfayı dinamik yap - cache'lenmesin
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function MenuPage({
   params
 }: {

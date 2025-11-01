@@ -29,7 +29,19 @@
     "status": "상태",
     "available": "사용 가능",
     "notAvailable": "사용 불가",
-    "allergyInfo": "알레르기 정보"
+    "allergyInfo": "알레르기 정보",
+    "allergies": {
+      "gluten": "글루텐",
+      "dairy": "유제품",
+      "nuts": "견과류",
+      "eggs": "달걀",
+      "fish": "생선",
+      "shellfish": "갑각류",
+      "soy": "대두",
+      "sesame": "참깨",
+      "vegetarian": "채식주의자",
+      "vegan": "비건"
+    }
   },
   "admin": {
     "title": "관리 패널",

@@ -62,11 +62,11 @@ export function LanguageSwitcher() {
 
   return (
     <div className="relative z-[60]">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-        disabled={loading}
-      >
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-600 transition-all shadow-sm hover:shadow-md"
+            disabled={loading}
+          >
         <span className="text-sm font-medium">
           {loading ? '...' : (currentLanguage?.nativeName || localeNames[locale as Locale] || locale.toUpperCase())}
         </span>
@@ -79,16 +79,16 @@ export function LanguageSwitcher() {
             className="fixed inset-0 z-[50]" 
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border rounded-lg shadow-lg z-[60] max-h-64 overflow-y-auto">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-[60] max-h-64 overflow-y-auto">
             {displayLanguages.map((lang) => (
               <button
                 key={lang.id}
                 onClick={() => switchLocale(lang.code)}
-                className={`w-full text-left px-4 py-2 text-sm transition-colors ${
-                  locale === lang.code
-                    ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-medium'
-                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                }`}
+                        className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                          locale === lang.code
+                            ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold'
+                            : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                        }`}
               >
                 {lang.nativeName}
               </button>

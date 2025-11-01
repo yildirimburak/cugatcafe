@@ -29,7 +29,19 @@
     "status": "Statut",
     "available": "Disponible",
     "notAvailable": "Non disponible",
-    "allergyInfo": "Informations sur les allergies"
+    "allergyInfo": "Informations sur les allergies",
+    "allergies": {
+      "gluten": "Gluten",
+      "dairy": "Produits laitiers",
+      "nuts": "Noix",
+      "eggs": "Œufs",
+      "fish": "Poisson",
+      "shellfish": "Fruits de mer",
+      "soy": "Soja",
+      "sesame": "Sésame",
+      "vegetarian": "Végétarien",
+      "vegan": "Végétalien"
+    }
   },
   "admin": {
     "title": "Panneau d'administration",

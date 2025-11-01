@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { MenuItem, AllergyTag } from '@/lib/types';
 
 interface MenuCardProps {
@@ -11,20 +12,21 @@ interface MenuCardProps {
 }
 
 // Alerji tag ikonları ve renkleri
-const allergyInfo: Record<AllergyTag, { icon: string; label: string; color: string }> = {
-  gluten: { icon: '🌾', label: 'Gluten', color: 'bg-amber-100 text-amber-800' },
-  dairy: { icon: '🥛', label: 'Süt', color: 'bg-blue-100 text-blue-800' },
-  nuts: { icon: '🥜', label: 'Fındık', color: 'bg-orange-100 text-orange-800' },
-  eggs: { icon: '🥚', label: 'Yumurta', color: 'bg-yellow-100 text-yellow-800' },
-  fish: { icon: '🐟', label: 'Balık', color: 'bg-cyan-100 text-cyan-800' },
-  shellfish: { icon: '🦐', label: 'Kabuklu', color: 'bg-pink-100 text-pink-800' },
-  soy: { icon: '🫘', label: 'Soya', color: 'bg-green-100 text-green-800' },
-  sesame: { icon: '🌰', label: 'Susam', color: 'bg-amber-100 text-amber-800' },
-  vegetarian: { icon: '🌿', label: 'Vejetaryen', color: 'bg-emerald-100 text-emerald-800' },
-  vegan: { icon: '🥬', label: 'Vegan', color: 'bg-lime-100 text-lime-800' },
+const allergyInfo: Record<AllergyTag, { icon: string; color: string }> = {
+  gluten: { icon: '🌾', color: 'bg-amber-100 text-amber-800' },
+  dairy: { icon: '🥛', color: 'bg-blue-100 text-blue-800' },
+  nuts: { icon: '🥜', color: 'bg-orange-100 text-orange-800' },
+  eggs: { icon: '🥚', color: 'bg-yellow-100 text-yellow-800' },
+  fish: { icon: '🐟', color: 'bg-cyan-100 text-cyan-800' },
+  shellfish: { icon: '🦐', color: 'bg-pink-100 text-pink-800' },
+  soy: { icon: '🫘', color: 'bg-green-100 text-green-800' },
+  sesame: { icon: '🌰', color: 'bg-amber-100 text-amber-800' },
+  vegetarian: { icon: '🌿', color: 'bg-emerald-100 text-emerald-800' },
+  vegan: { icon: '🥬', color: 'bg-lime-100 text-lime-800' },
 };
 
 export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
+  const t = useTranslations('menu');
   return (
     <div 
       className="flex items-start gap-4 py-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50 transition-colors"
@@ -64,13 +66,15 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
                 {item.allergies.map((allergy) => {
                   const info = allergyInfo[allergy];
                   if (!info) return null;
+                  const label = t(`allergies.${allergy}`);
                   return (
                     <span
                       key={allergy}
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${info.color}`}
-                      title={info.label}
+                      title={label}
                     >
-                      {info.icon}
+                      <span>{info.icon}</span>
+                      <span>{label}</span>
                     </span>
                   );
                 })}
