@@ -1,8 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 import { Header } from '@/components/Header';
-import { BusinessInfoSection } from '@/components/BusinessInfo';
 import { HeroSection } from '@/components/HeroSection';
-import { FeaturesSection } from '@/components/FeaturesSection';
+import { GoogleReviews } from '@/components/GoogleReviews';
+import { OurStory } from '@/components/OurStory';
+import { InstagramGallery } from '@/components/InstagramGallery';
 import Link from 'next/link';
 
 export default async function HomePage({
@@ -16,18 +17,23 @@ export default async function HomePage({
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      
-      <main className="max-w-6xl mx-auto px-4">
+
+      <main>
         {/* Hero Section */}
         <HeroSection locale={locale} />
 
-        {/* Features Section */}
-        <FeaturesSection locale={locale} />
+        {/* Our Story Section */}
+        <OurStory locale={locale} />
 
-        {/* İşletme Bilgileri */}
-        <div className="max-w-4xl mx-auto px-4 pb-12">
-          <BusinessInfoSection locale={locale} />
+        {/* Müşteri Yorumları */}
+        <div className="relative bg-white">
+          <div className="max-w-7xl mx-auto px-8">
+            <GoogleReviews locale={locale} />
+          </div>
         </div>
+
+        {/* Instagram Gallery */}
+        <InstagramGallery locale={locale} />
       </main>
     </div>
   );

@@ -10,6 +10,7 @@ import { MenuItemManager } from './MenuItemManager';
 import { CategoryManager } from './CategoryManager';
 import { LanguageManager } from './LanguageManager';
 import { BusinessManager } from './BusinessManager';
+import { ReviewManager } from './ReviewManager';
 import { subscribeToMenuItems, subscribeToCategories } from '@/lib/firebase/menu';
 
 interface AdminPanelProps {
@@ -23,7 +24,7 @@ export function AdminPanel({ locale }: AdminPanelProps) {
   const { user, loading } = useAuth();
   const [items, setItems] = useState<MenuItem[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [activeTab, setActiveTab] = useState<'items' | 'categories' | 'languages' | 'business'>('items');
+  const [activeTab, setActiveTab] = useState<'items' | 'categories' | 'languages' | 'business' | 'reviews'>('items');
   const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
@@ -126,6 +127,16 @@ export function AdminPanel({ locale }: AdminPanelProps) {
               >
                 İşletme Bilgileri
               </button>
+              <button
+                onClick={() => setActiveTab('reviews')}
+                className={`px-6 py-3 font-medium transition-all rounded-lg ${
+                  activeTab === 'reviews'
+                    ? 'bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-md'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-white/50 dark:hover:bg-gray-700/50'
+                }`}
+              >
+                Yorumlar
+              </button>
             </div>
           </div>
 
@@ -145,8 +156,10 @@ export function AdminPanel({ locale }: AdminPanelProps) {
               />
             ) : activeTab === 'languages' ? (
               <LanguageManager locale={adminLocale} />
-            ) : (
+            ) : activeTab === 'business' ? (
               <BusinessManager locale={adminLocale} />
+            ) : (
+              <ReviewManager locale={adminLocale} />
             )}
           </div>
         </div>

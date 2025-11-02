@@ -20,67 +20,61 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-lg">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex h-16 md:h-18 items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-black/80 backdrop-blur-2xl border-b border-green-600/20">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo & Site Name */}
           <Link 
             href={`/${locale}`} 
-            className="flex items-center gap-3 group hover:opacity-80 transition-opacity"
+            className="flex items-center gap-4 group"
           >
-            <div className="relative">
-              <img 
-                src="/favicon.ico" 
-                alt="Logo" 
-                className="h-10 w-10 md:h-12 md:w-12 object-contain rounded-lg shadow-md group-hover:scale-105 transition-transform"
-              />
+            <div className="relative w-16 h-16 border-2 border-green-600 flex items-center justify-center group-hover:border-green-500 transition-colors">
+              <span className="text-3xl">☕</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-                {t('siteName')}
+              <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+                CUGAT
               </h1>
-              <p className="text-xs text-gray-500 -mt-1">
-                {t('siteTagline')}
-              </p>
             </div>
           </Link>
 
           {/* Navigation Menu - Desktop */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-2">
             <Link
               href={`/${locale}`}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`px-6 py-3 font-light transition-all ${
                 isActive('') || pathname === `/${locale}`
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  ? 'bg-green-600 text-black border border-green-600'
+                  : 'text-white border border-transparent hover:border-green-600/50 hover:text-green-400'
               }`}
             >
-              <span className="flex items-center gap-2">
-                <HomeIcon className="w-4 h-4" />
+              <span className="flex items-center gap-2 uppercase tracking-wider text-sm">
                 {t('home')}
               </span>
             </Link>
             <Link
               href={`/${locale}/menu`}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`px-6 py-3 font-light transition-all ${
                 isActive('/menu')
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  ? 'bg-green-600 text-black border border-green-600'
+                  : 'text-white border border-transparent hover:border-green-600/50 hover:text-green-400'
               }`}
             >
-              {t('menu')}
+              <span className="uppercase tracking-wider text-sm">
+                {t('menu')}
+              </span>
             </Link>
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <LanguageSwitcher />
             <AdminButton />
             
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+              className="md:hidden p-3 text-white hover:text-green-400 transition-colors border border-white/20 hover:border-green-600"
               aria-label="Menu"
             >
               {mobileMenuOpen ? (
@@ -94,27 +88,26 @@ export function Header() {
 
         {/* Mobile Navigation Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 border-t border-gray-200 mt-2 pt-4 animate-in slide-in-from-top-2">
+          <div className="md:hidden pb-6 border-t border-green-600/20 mt-2 pt-6">
           <nav className="flex flex-col gap-2">
             <Link
               href={`/${locale}`}
               onClick={() => setMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2 ${
+              className={`px-6 py-4 font-light transition-all uppercase tracking-wider text-sm ${
                 isActive('') || pathname === `/${locale}`
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  ? 'bg-green-600 text-black border border-green-600'
+                  : 'text-white border border-transparent hover:border-green-600/50 hover:text-green-400'
               }`}
             >
-              <HomeIcon className="w-5 h-5" />
               {t('home')}
             </Link>
             <Link
               href={`/${locale}/menu`}
               onClick={() => setMobileMenuOpen(false)}
-              className={`px-4 py-2.5 rounded-lg font-medium transition-all ${
+              className={`px-6 py-4 font-light transition-all uppercase tracking-wider text-sm ${
                 isActive('/menu')
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-amber-50 hover:text-amber-600'
+                  ? 'bg-green-600 text-black border border-green-600'
+                  : 'text-white border border-transparent hover:border-green-600/50 hover:text-green-400'
               }`}
             >
               {t('menu')}

@@ -23,20 +23,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    try {
-      const auth = getAuthInstance();
-      const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        setLoading(false);
-      });
-
-      return () => unsubscribe();
-    } catch (error) {
-      console.error('Firebase Auth initialization error:', error);
+    if (typeof window === 'undefined') {
       setLoading(false);
+      return;
     }
+    
+    let unsubscribe: (() => void) | null = null;
+    let mounted = true;
+
+    const initializeAuth = async () => {
+      try {
+        const auth = getAuthInstance();
+        if (!mounted) return;
+        
+        unsubscribe = onAuthStateChanged(auth, (user) => {
+          if (mounted) {
+            setUser(user);
+            setLoading(false);
+          }
+        });
+      } catch (error) {
+        console.error('Firebase Auth initialization error:', error);
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    initializeAuth();
+
+    return () => {
+      mounted = false;
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

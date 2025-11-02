@@ -53,16 +53,28 @@ export function getDb(): Firestore {
   if (typeof window === 'undefined') {
     throw new Error('Firestore can only be used on the client side');
   }
-  const app = getFirebaseApp();
-  return getFirestore(app);
+
+  try {
+    const app = getFirebaseApp();
+    return getFirestore(app);
+  } catch (error) {
+    console.error('Failed to get Firestore instance:', error);
+    throw new Error('Firebase bağlantısı kurulamadı. Lütfen environment variables\'ları kontrol edin.');
+  }
 }
 
 export function getAuthInstance(): Auth {
   if (typeof window === 'undefined') {
     throw new Error('Firebase Auth can only be used on the client side');
   }
-  const app = getFirebaseApp();
-  return getAuth(app);
+  
+  try {
+    const app = getFirebaseApp();
+    return getAuth(app);
+  } catch (error) {
+    console.error('Failed to get Auth instance:', error);
+    throw new Error('Firebase bağlantısı kurulamadı. Lütfen environment variables\'ları kontrol edin.');
+  }
 }
 
 export function getStorageInstance(): FirebaseStorage {
