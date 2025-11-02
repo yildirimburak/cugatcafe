@@ -35,7 +35,7 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
       {/* Yuvarlak küçük resim */}
       <div className="flex-shrink-0">
         {item.imageUrl ? (
-          <div className="relative w-20 h-20 rounded-full overflow-hidden">
+          <div className="relative w-20 h-20 rounded-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
             <Image
               src={item.imageUrl}
               alt={name}
