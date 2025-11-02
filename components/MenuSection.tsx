@@ -310,12 +310,12 @@ export function MenuSection({ locale }: MenuSectionProps) {
             <div className="p-6 space-y-6">
               {/* Resim */}
               {selectedItem.imageUrl && (
-                <div className="relative w-full h-96 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
+                <div className="relative w-full h-96 rounded-xl overflow-hidden bg-gray-100">
                   <Image
                     src={selectedItem.imageUrl}
                     alt={getItemName(selectedItem)}
                     fill
-                    className="object-contain p-4"
+                    className="object-cover"
                     unoptimized={selectedItem.imageUrl.startsWith('data:image/')}
                   />
                 </div>
