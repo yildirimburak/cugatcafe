@@ -1,6 +1,57 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { getStorageInstance } from './config';
 
+// Resmi sıkıştır (max 800px genişlik, kalite 0.8)
+const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.8): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        // Resmi yeniden boyutlandır
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Canvas context not available'));
+          return;
+        }
+        
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Base64'e çevir ve File nesnesine dönüştür
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error('Image compression failed'));
+            return;
+          }
+          
+          const compressedFile = new File([blob], file.name, {
+            type: 'image/jpeg',
+            lastModified: Date.now(),
+          });
+          
+          resolve(compressedFile);
+        }, 'image/jpeg', quality);
+      };
+      img.onerror = () => reject(new Error('Image load failed'));
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => reject(new Error('File read failed'));
+  });
+};
+
 // Resmi Base64'e çevir
 export const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -23,7 +74,25 @@ export const uploadImage = async (file: File, path: string, useBase64: boolean =
     // Base64 modunda çalışıyoruz
     if (useBase64) {
       console.log('Resim Base64 olarak kaydediliyor...');
-      const base64 = await fileToBase64(file);
+      
+      // Önce resmi sıkıştır (800px max, kalite 0.8)
+      const compressedFile = await compressImage(file, 800, 0.8);
+      console.log(`Orijinal: ${(file.size / 1024).toFixed(1)}KB -> Sıkıştırılmış: ${(compressedFile.size / 1024).toFixed(1)}KB`);
+      
+      // Firestore limit kontrolü (1MB = 1048576 bytes)
+      const MAX_SIZE = 1048000; // 1MB'dan biraz küçük
+      if (compressedFile.size > MAX_SIZE) {
+        console.warn('Resim hala çok büyük, daha fazla sıkıştırılıyor...');
+        // Daha fazla sıkıştır
+        const moreCompressed = await compressImage(file, 600, 0.7);
+        if (moreCompressed.size > MAX_SIZE) {
+          throw new Error('Resim çok büyük, lütfen daha küçük bir resim seçin veya Firebase Storage kullanın');
+        }
+        const base64 = await fileToBase64(moreCompressed);
+        return base64;
+      }
+      
+      const base64 = await fileToBase64(compressedFile);
       return base64;
     }
 
