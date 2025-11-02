@@ -81,8 +81,14 @@ export function getStorageInstance(): FirebaseStorage {
   if (typeof window === 'undefined') {
     throw new Error('Firebase Storage can only be used on the client side');
   }
-  const app = getFirebaseApp();
-  return getStorage(app);
+  
+  try {
+    const app = getFirebaseApp();
+    return getStorage(app);
+  } catch (error) {
+    console.error('Failed to get Storage instance:', error);
+    throw new Error('Firebase Storage başlatılamadı. Firebase Console\'dan Storage\'ı açmayı deneyin.');
+  }
 }
 
 // For backward compatibility
