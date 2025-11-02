@@ -13,7 +13,9 @@
     "cancel": "Annuler",
     "search": "Rechercher",
     "categories": "Catégories",
-    "all": "Tous"
+    "all": "Tous",
+    "changeLanguage": "Changer de langue",
+    "close": "Fermer"
   },
   "home": {
     "welcome": "Bienvenue",

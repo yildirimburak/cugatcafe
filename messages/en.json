@@ -15,7 +15,9 @@
     "cancel": "Cancel",
     "search": "Search",
     "categories": "Categories",
-    "all": "All"
+    "all": "All",
+    "changeLanguage": "Change Language",
+    "close": "Close"
   },
   "home": {
     "welcome": "Welcome",

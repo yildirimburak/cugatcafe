@@ -13,7 +13,9 @@
     "cancel": "취소",
     "search": "검색",
     "categories": "카테고리",
-    "all": "전체"
+    "all": "전체",
+    "changeLanguage": "언어 변경",
+    "close": "닫기"
   },
   "home": {
     "welcome": "환영합니다",

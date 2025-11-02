@@ -15,7 +15,9 @@
     "cancel": "İptal",
     "search": "Ara",
     "categories": "Kategoriler",
-    "all": "Tümü"
+    "all": "Tümü",
+    "changeLanguage": "Dil Değiştir",
+    "close": "Kapat"
   },
   "home": {
     "welcome": "Hoş Geldiniz",

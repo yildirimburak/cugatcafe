@@ -13,7 +13,9 @@
     "cancel": "キャンセル",
     "search": "検索",
     "categories": "カテゴリ",
-    "all": "すべて"
+    "all": "すべて",
+    "changeLanguage": "言語を変更",
+    "close": "閉じる"
   },
   "home": {
     "welcome": "いらっしゃいませ",

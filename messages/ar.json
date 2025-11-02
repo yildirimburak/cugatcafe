@@ -13,7 +13,9 @@
     "cancel": "إلغاء",
     "search": "بحث",
     "categories": "الفئات",
-    "all": "الكل"
+    "all": "الكل",
+    "changeLanguage": "تغيير اللغة",
+    "close": "إغلاق"
   },
   "home": {
     "welcome": "مرحباً",

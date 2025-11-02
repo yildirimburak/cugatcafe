@@ -13,7 +13,9 @@
     "cancel": "Отмена",
     "search": "Поиск",
     "categories": "Категории",
-    "all": "Все"
+    "all": "Все",
+    "changeLanguage": "Изменить язык",
+    "close": "Закрыть"
   },
   "home": {
     "welcome": "Добро пожаловать",
