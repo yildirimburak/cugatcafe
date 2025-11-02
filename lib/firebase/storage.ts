@@ -28,6 +28,11 @@ const compressImage = (file: File, maxWidth: number = 800, quality: number = 0.8
           return;
         }
         
+        // Önce beyaz arka plan çiz (şeffaf PNG için)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        
+        // Sonra resmi çiz
         ctx.drawImage(img, 0, 0, width, height);
         
         // Base64'e çevir ve File nesnesine dönüştür
