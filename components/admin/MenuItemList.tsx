@@ -257,7 +257,7 @@ export function MenuItemList({
             <div className="p-6 space-y-6">
               {/* Resim */}
               {selectedItem.imageUrl && (
-                <div className="relative w-full h-96 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
                   <Image
                     src={selectedItem.imageUrl}
                     alt={getItemName(selectedItem)}
