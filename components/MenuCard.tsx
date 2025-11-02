@@ -41,6 +41,7 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
               alt={name}
               fill
               className="object-cover"
+              unoptimized={item.imageUrl.startsWith('data:image/')}
             />
           </div>
         ) : (

@@ -316,6 +316,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
                     alt={getItemName(selectedItem)}
                     fill
                     className="object-contain p-4"
+                    unoptimized={selectedItem.imageUrl.startsWith('data:image/')}
                   />
                 </div>
               )}

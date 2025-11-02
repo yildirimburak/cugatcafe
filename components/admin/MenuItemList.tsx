@@ -135,6 +135,7 @@ export function MenuItemList({
                           alt={getItemName(item)}
                           fill
                           className="object-cover"
+                          unoptimized={item.imageUrl.startsWith('data:image/')}
                         />
                       </div>
                     ) : (
@@ -262,6 +263,7 @@ export function MenuItemList({
                     alt={getItemName(selectedItem)}
                     fill
                     className="object-contain p-4"
+                    unoptimized={selectedItem.imageUrl.startsWith('data:image/')}
                   />
                 </div>
               )}
