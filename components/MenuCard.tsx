@@ -11,7 +11,6 @@ interface MenuCardProps {
   onClick?: () => void;
 }
 
-// Alerji tag ikonları ve renkleri
 const allergyInfo: Record<AllergyTag, { icon: string; color: string }> = {
   gluten: { icon: '🌾', color: 'bg-amber-100 text-amber-800' },
   dairy: { icon: '🥛', color: 'bg-blue-100 text-blue-800' },
@@ -28,14 +27,14 @@ const allergyInfo: Record<AllergyTag, { icon: string; color: string }> = {
 export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
   const t = useTranslations('menu');
   return (
-    <div 
-      className="flex items-start gap-3 md:gap-4 py-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors rounded-lg px-2 -mx-2"
+    <div
+      className="flex items-start gap-3 py-3 border-b border-zinc-100 last:border-b-0 cursor-pointer active:bg-zinc-50 transition-colors"
       onClick={onClick}
     >
-      {/* Yuvarlak küçük resim */}
+      {/* Resim */}
       <div className="flex-shrink-0">
         {item.imageUrl ? (
-          <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-zinc-100">
             <Image
               src={item.imageUrl}
               alt={name}
@@ -45,53 +44,45 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
             />
           </div>
         ) : (
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gray-100 flex items-center justify-center">
-            <span className="text-xl md:text-2xl">🍽️</span>
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-zinc-100 flex items-center justify-center">
+            <span className="text-xl">🍽️</span>
           </div>
         )}
       </div>
 
       {/* İçerik */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <h3 className="text-base font-semibold text-gray-900 mb-1">
-              {name}
-            </h3>
-            <p className="text-sm text-gray-500 mb-2 leading-relaxed">
-              {description}
-            </p>
-            {/* Alerji tag'leri */}
-            {item.allergies && item.allergies.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                {item.allergies.map((allergy) => {
-                  const info = allergyInfo[allergy];
-                  if (!info) return null;
-                  const label = t(`allergies.${allergy}`);
-                  return (
-                    <span
-                      key={allergy}
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${info.color}`}
-                      title={label}
-                    >
-                      <span>{info.icon}</span>
-                      <span>{label}</span>
-                    </span>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-          
-          {/* Fiyat */}
-          <div className="flex-shrink-0">
-            <span className="text-base font-semibold text-gray-900">
-              {item.price.toFixed(0)} TL
-            </span>
-          </div>
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-sm font-semibold text-zinc-900 leading-tight">
+            {name}
+          </h3>
+          <span className="text-sm font-semibold text-zinc-900 tabular-nums flex-shrink-0">
+            {item.price.toFixed(0)} ₺
+          </span>
         </div>
+        {description && (
+          <p className="text-xs text-zinc-500 mt-0.5 leading-relaxed line-clamp-2">
+            {description}
+          </p>
+        )}
+        {item.allergies && item.allergies.length > 0 && (
+          <div className="flex flex-wrap items-center gap-1 mt-1.5">
+            {item.allergies.map((allergy) => {
+              const info = allergyInfo[allergy];
+              if (!info) return null;
+              return (
+                <span
+                  key={allergy}
+                  className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-medium ${info.color}`}
+                >
+                  <span>{info.icon}</span>
+                  <span className="hidden sm:inline">{t(`allergies.${allergy}`)}</span>
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-

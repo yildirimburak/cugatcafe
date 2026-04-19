@@ -90,46 +90,37 @@ export function CategoryFilter({
   };
 
   return (
-    <div className="sticky top-0 z-40 mb-8 bg-white/95 backdrop-blur-sm py-3 border-b border-gray-100 -mx-4 px-4">
-      <div className="flex gap-4 items-center">
-        {/* Tümü butonu - sabit kalacak */}
+    <div className="sticky top-0 z-40 mb-6 bg-white/95 backdrop-blur-sm py-2.5 border-b border-zinc-100 -mx-4 px-4">
+      <div
+        ref={scrollContainerRef}
+        className="flex gap-2 overflow-x-auto overflow-y-hidden scrollbar-hide"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
         <button
           data-category-id="all"
           onClick={() => handleCategoryClick('all')}
-          className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
+          className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
             selectedCategory === 'all'
-              ? 'bg-gray-900 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-zinc-900 text-white'
+              : 'bg-zinc-100 text-zinc-600 active:bg-zinc-200'
           }`}
         >
           {t('all')}
         </button>
-        
-        {/* Diğer kategoriler - scroll edilebilir */}
-        <div 
-          ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto overflow-y-hidden scrollbar-hide flex-1"
-          style={{ 
-            WebkitOverflowScrolling: 'touch',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
-          }}
-        >
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              data-category-id={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
-                selectedCategory === category.id
-                  ? 'bg-gray-900 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {getCategoryName(category)}
-            </button>
-          ))}
-        </div>
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            data-category-id={category.id}
+            onClick={() => handleCategoryClick(category.id)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0 transition-colors ${
+              selectedCategory === category.id
+                ? 'bg-zinc-900 text-white'
+                : 'bg-zinc-100 text-zinc-600 active:bg-zinc-200'
+            }`}
+          >
+            {getCategoryName(category)}
+          </button>
+        ))}
       </div>
     </div>
   );

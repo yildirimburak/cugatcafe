@@ -1,5 +1,6 @@
 import { MenuSection } from '@/components/MenuSection';
 import { MenuHeader } from '@/components/MenuHeader';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 // Sayfayı dinamik yap - cache'lenmesin
 export const dynamic = 'force-dynamic';
@@ -19,6 +20,7 @@ export default async function MenuPage({
 
         <MenuSection locale={locale} />
       </main>
+      <ScrollToTop />
     </div>
   );
 }

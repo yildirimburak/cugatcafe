@@ -265,7 +265,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
               className="mb-8 scroll-mt-[56px]"
             >
               {category && (
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-3">
                   {getCategoryName(category)}
                 </h2>
               )}
@@ -287,97 +287,81 @@ export function MenuSection({ locale }: MenuSectionProps) {
 
       {/* Detay Popup */}
       {selectedItem && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 bg-black/50 backdrop-blur-sm"
-          onClick={() => setSelectedItem(null)}
-        >
-          <div
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center z-10">
-              <h2 className="text-lg md:text-2xl font-bold text-gray-900 truncate mr-2">
-                {getItemName(selectedItem)}
-              </h2>
-              <button
-                onClick={() => setSelectedItem(null)}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-all"
-              >
-                <XMarkIcon className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-              {/* Resim */}
-              {selectedItem.imageUrl && (
-                <div className="relative w-full h-[250px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                  <Image
-                    src={selectedItem.imageUrl}
-                    alt={getItemName(selectedItem)}
-                    fill
-                    className="object-cover"
-                    unoptimized={selectedItem.imageUrl.startsWith('data:image/')}
-                  />
-                </div>
-              )}
-
-              {/* Açıklama */}
-              {getItemDescription(selectedItem) && (
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                    {t('description')}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {getItemDescription(selectedItem)}
-                  </p>
-                </div>
-              )}
-
-              {/* Detaylar */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                    {t('category')}
-                  </h3>
-                  <p className="text-gray-600">
-                    {getCategoryName(categories.find(c => c.id === selectedItem.category) || null)}
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                    {t('price')}
-                  </h3>
-                  <p className="text-green-700 font-semibold text-lg">
-                    {selectedItem.price.toFixed(0)} {locale === 'en' ? 'TRY' : 'TL'}
-                  </p>
-                </div>
+        <div className="fixed inset-0 z-50" onClick={() => setSelectedItem(null)}>
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 flex items-end sm:items-center sm:justify-center">
+            <div
+              className="relative bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl max-h-[92vh] sm:max-h-[85vh] flex flex-col animate-[slideUp_0.2s_ease-out] sm:animate-none"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Handle bar (mobile) */}
+              <div className="sm:hidden flex justify-center pt-2 pb-1">
+                <div className="w-8 h-1 bg-zinc-300 rounded-full" />
               </div>
 
-              {/* Alerji Bilgileri */}
-              {selectedItem.allergies && selectedItem.allergies.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                    {t('allergyInfo')}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedItem.allergies.map((allergy) => {
-                      const info = allergyInfo[allergy];
-                      if (!info) return null;
-                      const label = t(`allergies.${allergy}`);
-                      return (
-                        <span
-                          key={allergy}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${info.color}`}
-                          title={label}
-                        >
-                          <span className="text-base">{info.icon}</span>
-                          <span>{label}</span>
-                        </span>
-                      );
-                    })}
-                  </div>
+              {/* Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-100 flex-shrink-0">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-sm font-semibold text-zinc-900 truncate">{getItemName(selectedItem)}</h2>
+                  <p className="text-[11px] text-zinc-400">
+                    {getCategoryName(categories.find(c => c.id === selectedItem.category) || null)} · {selectedItem.price.toFixed(0)} {locale === 'en' ? 'TRY' : '₺'}
+                  </p>
                 </div>
-              )}
+                <button onClick={() => setSelectedItem(null)} className="p-1.5 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors flex-shrink-0 ml-2">
+                  <XMarkIcon className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="overflow-y-auto flex-1 overscroll-contain">
+                {selectedItem.imageUrl && (
+                  <div className="relative w-full aspect-[16/10] bg-zinc-100">
+                    <Image
+                      src={selectedItem.imageUrl}
+                      alt={getItemName(selectedItem)}
+                      fill
+                      className="object-cover"
+                      unoptimized={selectedItem.imageUrl.startsWith('data:image/')}
+                    />
+                  </div>
+                )}
+
+                <div className="p-5 space-y-4">
+                  {getItemDescription(selectedItem) && (
+                    <p className="text-sm text-zinc-600 leading-relaxed">{getItemDescription(selectedItem)}</p>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-zinc-50 rounded-lg p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">{t('category')}</p>
+                      <p className="text-xs font-medium text-zinc-700">{getCategoryName(categories.find(c => c.id === selectedItem.category) || null)}</p>
+                    </div>
+                    <div className="bg-zinc-50 rounded-lg p-3">
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 mb-1">{t('price')}</p>
+                      <p className="text-xs font-semibold text-zinc-900">{selectedItem.price.toFixed(0)} {locale === 'en' ? 'TRY' : '₺'}</p>
+                    </div>
+                  </div>
+
+                  {selectedItem.allergies && selectedItem.allergies.length > 0 && (
+                    <div>
+                      <p className="text-[10px] uppercase tracking-wider text-zinc-400 mb-2">{t('allergyInfo')}</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {selectedItem.allergies.map((allergy) => {
+                          const info = allergyInfo[allergy];
+                          if (!info) return null;
+                          const label = t(`allergies.${allergy}`);
+                          return (
+                            <span key={allergy} className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-medium ${info.color}`}>
+                              <span>{info.icon}</span>
+                              <span>{label}</span>
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
