@@ -29,13 +29,13 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
   const t = useTranslations('menu');
   return (
     <div 
-      className="flex items-start gap-4 py-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50 transition-colors"
+      className="flex items-start gap-3 md:gap-4 py-4 border-b border-gray-100 last:border-b-0 cursor-pointer hover:bg-gray-50 active:bg-gray-100 transition-colors rounded-lg px-2 -mx-2"
       onClick={onClick}
     >
       {/* Yuvarlak küçük resim */}
       <div className="flex-shrink-0">
         {item.imageUrl ? (
-          <div className="relative w-20 h-20 rounded-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+          <div className="relative w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
             <Image
               src={item.imageUrl}
               alt={name}
@@ -45,8 +45,8 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
             />
           </div>
         ) : (
-          <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center">
-            <span className="text-2xl">🍽️</span>
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gray-100 flex items-center justify-center">
+            <span className="text-xl md:text-2xl">🍽️</span>
           </div>
         )}
       </div>

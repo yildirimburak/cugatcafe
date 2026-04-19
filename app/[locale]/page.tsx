@@ -27,7 +27,7 @@ export default async function HomePage({
 
         {/* Müşteri Yorumları */}
         <div className="relative bg-white">
-          <div className="max-w-7xl mx-auto px-8">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
             <GoogleReviews locale={locale} />
           </div>
         </div>

@@ -38,16 +38,16 @@ export function InstagramGallery({ locale }: InstagramGalleryProps) {
   const username = getUsername(instagramUrl) || 'cugatcafe_galata';
 
   return (
-    <section className="relative py-32 overflow-hidden bg-white">
-      <div className="relative max-w-6xl mx-auto px-8">
+    <section className="relative py-16 md:py-32 overflow-hidden bg-white">
+      <div className="relative max-w-6xl mx-auto px-4 md:px-8">
         {/* Section Header */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-12 md:mb-24">
           <div className="inline-flex items-center gap-3 mb-8">
             <div className="w-16 h-px bg-green-600/20"></div>
             <span className="text-green-600 text-sm font-light uppercase tracking-widest">Instagram</span>
             <div className="w-16 h-px bg-green-600/20"></div>
           </div>
-          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-black mb-6">
             {t('instagramTitle')}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
@@ -95,12 +95,6 @@ export function InstagramGallery({ locale }: InstagramGalleryProps) {
               </a>
             </div>
             
-            {/* Note about Instagram integration */}
-            <div className="mt-8 text-center">
-              <p className="text-sm text-gray-500">
-                Instagram gönderileri için API entegrasyonu gerekmektedir
-              </p>
-            </div>
           </div>
         ) : (
           <div className="text-center py-16">

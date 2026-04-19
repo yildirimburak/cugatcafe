@@ -121,8 +121,8 @@ export function BusinessInfoSection({ locale }: BusinessInfoProps) {
   const workingHoursList = formatWorkingHours();
 
   return (
-    <div className="py-32">
-      <div className="text-center mb-24">
+    <div className="py-16 md:py-32">
+      <div className="text-center mb-12 md:mb-24">
         <div className="inline-flex items-center gap-3 mb-8">
           <div className="w-16 h-px bg-green-600/20"></div>
           <span className="text-green-600 text-sm font-light uppercase tracking-widest">{t('businessInfo')}</span>
@@ -133,7 +133,7 @@ export function BusinessInfoSection({ locale }: BusinessInfoProps) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 max-w-5xl mx-auto px-4 md:px-0">
         {/* Sol Kolon - İletişim Bilgileri */}
         <div className="space-y-12">
           <div>

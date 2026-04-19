@@ -40,7 +40,7 @@ export function HeroSection({ locale }: HeroSectionProps) {
         <div className="w-full max-w-7xl mx-auto px-8">
           {/* Full Width Content */}
           <div className="text-center">
-            <div className="space-y-16">
+            <div className="space-y-8 md:space-y-16">
               {/* Number Badge */}
               <div className="inline-flex items-center gap-3">
                 <div className="w-16 h-px bg-white/30"></div>
@@ -48,24 +48,24 @@ export function HeroSection({ locale }: HeroSectionProps) {
               </div>
 
               {/* Main Heading */}
-              <h1 className="text-9xl md:text-[15rem] font-black leading-none tracking-tighter">
+              <h1 className="text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] font-black leading-none tracking-tighter">
                 <span className="block text-white mb-2">CUGAT</span>
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-emerald-200">CAFE</span>
               </h1>
 
               {/* Subtitle */}
-              <p className="text-3xl md:text-4xl text-white/80 leading-relaxed max-w-3xl mx-auto font-light">
+              <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white/80 leading-relaxed max-w-3xl mx-auto font-light px-4">
                 {t('welcomeMessage')}
               </p>
 
               {/* CTA Button */}
-              <div className="pt-8">
+              <div className="pt-4 md:pt-8">
                 <Link
                   href={`/${locale}/menu`}
-                  className="group inline-flex items-center gap-4 bg-white text-green-700 px-16 py-6 font-black text-2xl tracking-wider hover:bg-green-50 transition-colors duration-300 uppercase border-2 border-white"
+                  className="group inline-flex items-center gap-3 md:gap-4 bg-white text-green-700 px-8 sm:px-12 md:px-16 py-4 md:py-6 font-black text-lg md:text-2xl tracking-wider hover:bg-green-50 transition-colors duration-300 uppercase border-2 border-white"
                 >
                   {t('viewMenu')}
-                  <ArrowRightIcon className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRightIcon className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform" />
                 </Link>
               </div>
             </div>

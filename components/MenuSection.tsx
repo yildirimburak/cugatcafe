@@ -213,8 +213,8 @@ export function MenuSection({ locale }: MenuSectionProps) {
   if (loading) {
     return (
       <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto"></div>
-        <p className="mt-4 text-gray-500 dark:text-gray-400">Yükleniyor...</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+        <p className="mt-4 text-gray-500">Yükleniyor...</p>
       </div>
     );
   }
@@ -288,15 +288,15 @@ export function MenuSection({ locale }: MenuSectionProps) {
       {/* Detay Popup */}
       {selectedItem && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4 bg-black/50 backdrop-blur-sm"
           onClick={() => setSelectedItem(null)}
         >
           <div
-            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center z-10">
-              <h2 className="text-2xl font-bold text-gray-900">
+            <div className="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 flex justify-between items-center z-10">
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900 truncate mr-2">
                 {getItemName(selectedItem)}
               </h2>
               <button
@@ -307,10 +307,10 @@ export function MenuSection({ locale }: MenuSectionProps) {
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-4 md:p-6 space-y-4 md:space-y-6">
               {/* Resim */}
               {selectedItem.imageUrl && (
-                <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                <div className="relative w-full h-[250px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                   <Image
                     src={selectedItem.imageUrl}
                     alt={getItemName(selectedItem)}
@@ -334,7 +334,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
               )}
 
               {/* Detaylar */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     {t('category')}
@@ -347,7 +347,7 @@ export function MenuSection({ locale }: MenuSectionProps) {
                   <h3 className="text-sm font-semibold text-gray-700 mb-2">
                     {t('price')}
                   </h3>
-                  <p className="text-amber-600 font-semibold text-lg">
+                  <p className="text-green-700 font-semibold text-lg">
                     {selectedItem.price.toFixed(0)} {locale === 'en' ? 'TRY' : 'TL'}
                   </p>
                 </div>

@@ -21,18 +21,18 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-black/80 backdrop-blur-2xl border-b border-green-600/20">
-      <div className="max-w-7xl mx-auto px-8">
-        <div className="flex h-20 items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="flex h-16 md:h-20 items-center justify-between">
           {/* Logo & Site Name */}
-          <Link 
-            href={`/${locale}`} 
-            className="flex items-center gap-4 group"
+          <Link
+            href={`/${locale}`}
+            className="flex items-center gap-3 group"
           >
-            <div className="relative w-16 h-16 border-2 border-green-600 flex items-center justify-center group-hover:border-green-500 transition-colors">
-              <span className="text-3xl">☕</span>
+            <div className="relative w-10 h-10 md:w-14 md:h-14 border-2 border-green-600 rounded-lg flex items-center justify-center group-hover:border-green-500 transition-colors">
+              <span className="text-xl md:text-2xl">☕</span>
             </div>
-            <div className="hidden sm:block">
-              <h1 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+            <div>
+              <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
                 CUGAT
               </h1>
             </div>
@@ -67,7 +67,7 @@ export function Header() {
           </nav>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <LanguageSwitcher />
             <AdminButton />
             

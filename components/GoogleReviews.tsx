@@ -22,9 +22,7 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
       try {
         setLoading(true);
         setError(null);
-        console.log('Fetching reviews...');
-        const fetchedReviews = await getReviews(true); // Sadece görünür yorumlar
-        console.log('Fetched reviews:', fetchedReviews.length);
+        const fetchedReviews = await getReviews(true);
         setReviews(fetchedReviews);
       } catch (err: any) {
         console.error('Error fetching reviews:', err);
@@ -56,7 +54,7 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
     return (
       <div className="mt-16 pt-16 border-t border-gray-200">
         <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
           <p className="mt-4 text-gray-500">{t('loadingReviews')}</p>
         </div>
       </div>
@@ -76,7 +74,6 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
   }
 
   if (reviews.length === 0) {
-    console.log('No reviews found');
     return (
       <div className="mt-16 pt-16 border-t border-gray-200">
         <div className="text-center py-8">
@@ -88,8 +85,6 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
     );
   }
   
-  console.log('Rendering reviews:', reviews.length);
-
   // Ortalama rating hesapla
   const averageRating = reviews.length > 0
     ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
@@ -129,8 +124,8 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
   };
 
   return (
-    <div className="py-32">
-      <div className="text-center mb-24">
+    <div className="py-16 md:py-32">
+      <div className="text-center mb-12 md:mb-24">
         <div className="inline-flex items-center gap-3 mb-8">
           <div className="w-16 h-px bg-green-600/20"></div>
           <span className="text-green-600 text-sm font-light uppercase tracking-widest">{t('customerReviews')}</span>
@@ -153,11 +148,11 @@ export function GoogleReviews({ locale }: GoogleReviewsProps) {
       </div>
 
       {/* Yorumlar Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto px-4 md:px-0">
         {displayedReviews.map((review) => (
           <div
             key={review.id}
-            className="group space-y-6 p-8 border border-green-600/10 hover:border-green-600/30 transition-colors duration-300"
+            className="group space-y-4 md:space-y-6 p-5 md:p-8 border border-green-600/10 hover:border-green-600/30 transition-colors duration-300 rounded-xl md:rounded-none"
           >
             {/* Öne Çıkan Badge */}
             {review.featured && (

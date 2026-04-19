@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Category } from '@/lib/types';
 import { useTranslations } from 'next-intl';
 import { getEnabledLanguages, Language } from '@/lib/firebase/languages';
+import { CheckIcon } from '@heroicons/react/24/outline';
 
 interface CategoryFormProps {
   category?: Category | null;
@@ -13,162 +14,120 @@ interface CategoryFormProps {
 
 export function CategoryForm({ category, onSave, onCancel }: CategoryFormProps) {
   const t = useTranslations('admin');
-  const [activeLanguage, setActiveLanguage] = useState<string>('tr');
   const [enabledLanguages, setEnabledLanguages] = useState<Language[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // Aktif dilleri yükle
+  const [formData, setFormData] = useState<any>({});
+
   useEffect(() => {
     async function fetchLanguages() {
       try {
         const langs = await getEnabledLanguages();
-        // Türkçe'yi mutlaka listeye ekle (eğer yoksa)
-        const hasTurkish = langs.some(lang => lang.code === 'tr');
-        if (!hasTurkish) {
-          langs.unshift({ 
-            id: 'tr', 
-            code: 'tr', 
-            name: 'Turkish', 
-            nativeName: 'Türkçe', 
-            enabled: true, 
-            createdAt: new Date(), 
-            updatedAt: new Date() 
-          });
-        } else {
-          // Türkçe'yi en başa taşı
-          const trIndex = langs.findIndex(l => l.code === 'tr');
-          if (trIndex > 0) {
-            const trLang = langs.splice(trIndex, 1)[0];
-            langs.unshift(trLang);
-          }
-        }
+        const hasTr = langs.some(l => l.code === 'tr');
+        if (!hasTr) langs.unshift({ id: 'tr', code: 'tr', name: 'Turkish', nativeName: 'Türkçe', enabled: true, createdAt: new Date(), updatedAt: new Date() });
+        else { const i = langs.findIndex(l => l.code === 'tr'); if (i > 0) { const tr = langs.splice(i, 1)[0]; langs.unshift(tr); } }
         setEnabledLanguages(langs);
-        // Türkçe'yi varsayılan olarak seç
-        setActiveLanguage('tr');
-      } catch (error) {
-        console.error('Error fetching languages:', error);
-        // Hata durumunda en azından tr'yi göster
+      } catch {
         setEnabledLanguages([{ id: 'tr', code: 'tr', name: 'Turkish', nativeName: 'Türkçe', enabled: true, createdAt: new Date(), updatedAt: new Date() }]);
-        setActiveLanguage('tr');
-      } finally {
-        setLoading(false);
-      }
+      } finally { setLoading(false); }
     }
     fetchLanguages();
   }, []);
-  
-  // Aktif diller için dinamik form state
-  const [formData, setFormData] = useState<any>({});
 
-  // Form state'i aktif dillere göre güncelle
   useEffect(() => {
     if (enabledLanguages.length > 0) {
       const data: any = {};
-      
-      // Sadece aktif diller için alanlar oluştur
-      enabledLanguages.forEach(lang => {
-        data[`name${lang.code.charAt(0).toUpperCase() + lang.code.slice(1)}`] = '';
-      });
-      
+      enabledLanguages.forEach(lang => { data[fieldKey(lang.code)] = ''; });
       if (category) {
-        // Mevcut category'den sadece aktif diller için değerleri yükle
         enabledLanguages.forEach(lang => {
-          const nameKey = `name${lang.code.charAt(0).toUpperCase() + lang.code.slice(1)}`;
-          data[nameKey] = (category as any)[nameKey] || '';
+          const key = fieldKey(lang.code);
+          if (lang.code === 'tr') {
+            data[key] = (category as any)[key] || category.name || '';
+          } else {
+            data[key] = (category as any)[key] || '';
+          }
         });
       }
-      
       setFormData(data);
     }
   }, [category, enabledLanguages]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Türkçe alanının dolu olduğunu kontrol et
-    const turkishName = formData.nameTr?.trim() || '';
-    
-    if (!turkishName) {
-      alert('Türkçe kategori adı zorunludur!');
-      setActiveLanguage('tr');
-      return;
-    }
-    
+    if (!formData.nameTr?.trim()) { alert('Türkçe kategori adı zorunludur!'); return; }
     onSave(formData);
   };
 
-  const getFieldName = (localeCode: string) => {
-    return `name${localeCode.charAt(0).toUpperCase() + localeCode.slice(1)}`;
-  };
+  const fieldKey = (code: string) => `name${code.charAt(0).toUpperCase() + code.slice(1)}`;
+  const hasContent = (code: string) => !!(formData[fieldKey(code)]?.trim());
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-slate-50 to-indigo-50/50 dark:from-gray-900 dark:to-gray-800 p-6 rounded-xl border border-slate-200/50 dark:border-gray-700/50 shadow-lg">
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-slate-600 dark:text-slate-400 text-sm">Diller yükleniyor...</p>
-        </div>
+      <div className="py-8 text-center">
+        <div className="w-6 h-6 border-2 border-zinc-200 border-t-zinc-600 rounded-full animate-spin mx-auto"></div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gradient-to-br from-slate-50 to-indigo-50/50 dark:from-gray-900 dark:to-gray-800 p-6 rounded-xl space-y-4 border border-slate-200/50 dark:border-gray-700/50 shadow-lg">
-      {/* Dil Seçici */}
-      <div className="border-b border-slate-200 dark:border-gray-700 mb-4 pb-4">
-        <div className="flex flex-wrap gap-2">
-          {enabledLanguages.map((lang) => (
-            <button
-              key={lang.id}
-              type="button"
-              onClick={() => setActiveLanguage(lang.code)}
-              className={`px-3 py-1.5 text-sm rounded-lg transition-all font-medium ${
-                activeLanguage === lang.code
-                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/30'
-                  : 'bg-white dark:bg-gray-700 text-slate-600 dark:text-slate-300 hover:bg-indigo-50 dark:hover:bg-gray-600 border border-slate-200 dark:border-gray-600'
-              }`}
-            >
-              {lang.nativeName}
-            </button>
-          ))}
-        </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Tüm diller için inputlar */}
+      <div className="space-y-3">
+        {enabledLanguages.map(lang => {
+          const key = fieldKey(lang.code);
+          const filled = hasContent(lang.code);
+          const isRequired = lang.code === 'tr';
+
+          return (
+            <div key={lang.code}>
+              <label className="flex items-center gap-2 text-xs font-medium text-zinc-500 mb-1.5">
+                <span className={`inline-flex items-center justify-center w-6 h-5 text-[10px] font-bold uppercase rounded ${
+                  filled
+                    ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                    : isRequired
+                      ? 'bg-red-50 text-red-400 border border-red-200'
+                      : 'bg-zinc-100 text-zinc-400 border border-zinc-200'
+                }`}>
+                  {filled ? <CheckIcon className="w-3 h-3" /> : lang.code}
+                </span>
+                <span>{lang.nativeName}</span>
+                {isRequired && <span className="text-red-500">*</span>}
+              </label>
+              <input
+                type="text"
+                value={formData[key] || ''}
+                onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                required={isRequired}
+                placeholder={`${lang.nativeName} dilinde kategori adı`}
+                className={`w-full px-3.5 py-2.5 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-colors ${
+                  filled
+                    ? 'border-emerald-200 bg-emerald-50/30'
+                    : 'border-zinc-200'
+                } focus:border-zinc-400`}
+              />
+            </div>
+          );
+        })}
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-            {t('categoryName') || 'Kategori Adı'} ({enabledLanguages.find(l => l.code === activeLanguage)?.nativeName || activeLanguage})
-            {activeLanguage === 'tr' && <span className="text-red-500 ml-1">* (Zorunlu)</span>}
-          </label>
-          <input
-            type="text"
-            value={formData[getFieldName(activeLanguage)] || ''}
-            onChange={(e) => setFormData({ 
-              ...formData, 
-              [getFieldName(activeLanguage)]: e.target.value 
-            })}
-            required={activeLanguage === 'tr'}
-            className={`w-full px-4 py-2.5 border border-slate-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-gray-800 text-slate-900 dark:text-white transition-all ${activeLanguage === 'tr' ? 'ring-1 ring-red-200' : ''}`}
-          />
+      {/* Doluluk özeti */}
+      {enabledLanguages.length > 1 && (
+        <div className="flex items-center gap-2 py-2 px-3 bg-zinc-50 rounded-lg">
+          <div className="flex-1 bg-zinc-200 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="bg-emerald-500 h-full rounded-full transition-all duration-300"
+              style={{ width: `${(enabledLanguages.filter(l => hasContent(l.code)).length / enabledLanguages.length) * 100}%` }}
+            />
+          </div>
+          <span className="text-[11px] text-zinc-500 tabular-nums flex-shrink-0">
+            {enabledLanguages.filter(l => hasContent(l.code)).length}/{enabledLanguages.length} dil
+          </span>
         </div>
-      </div>
+      )}
 
-      <div className="flex justify-end gap-3 pt-4">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-5 py-2.5 border border-slate-300 dark:border-gray-600 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-gray-800 transition-all font-medium"
-        >
-          İptal
-        </button>
-        <button
-          type="submit"
-          className="px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 font-medium"
-        >
-          Kaydet
-        </button>
+      <div className="flex justify-end gap-2 pt-2">
+        <button type="button" onClick={onCancel} className="px-4 py-2 text-sm text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors">İptal</button>
+        <button type="submit" className="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-800 transition-colors">Kaydet</button>
       </div>
     </form>
   );
 }
-

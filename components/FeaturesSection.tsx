@@ -44,9 +44,9 @@ export function FeaturesSection({ locale }: FeaturesSectionProps) {
 
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-white">
-      <div className="relative max-w-6xl mx-auto px-8">
+      <div className="relative max-w-6xl mx-auto px-4 md:px-8">
         {/* Section Header - Minimal */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <div className="inline-flex items-center gap-3 mb-8">
             <div className="w-16 h-px bg-green-600/20"></div>
             <span className="text-green-600 text-sm font-light uppercase tracking-widest">{t('whyChooseUs')}</span>
@@ -58,7 +58,7 @@ export function FeaturesSection({ locale }: FeaturesSectionProps) {
         </div>
 
         {/* Features Grid - Ultra Minimal */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
