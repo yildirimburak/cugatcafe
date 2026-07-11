@@ -10,6 +10,7 @@ import { CategoryManager } from './CategoryManager';
 import { LanguageManager } from './LanguageManager';
 import { BusinessManager } from './BusinessManager';
 import { ReviewManager } from './ReviewManager';
+import { QRCodeManager } from './QRCodeManager';
 import { subscribeToMenuItems, subscribeToCategories } from '@/lib/firebase/menu';
 import {
   Squares2X2Icon,
@@ -17,6 +18,7 @@ import {
   LanguageIcon,
   BuildingStorefrontIcon,
   ChatBubbleLeftRightIcon,
+  QrCodeIcon,
   ArrowRightStartOnRectangleIcon,
   Bars3Icon,
   XMarkIcon,
@@ -26,7 +28,7 @@ interface AdminPanelProps {
   locale: string;
 }
 
-type Tab = 'items' | 'categories' | 'languages' | 'business' | 'reviews';
+type Tab = 'items' | 'categories' | 'languages' | 'business' | 'reviews' | 'qr';
 
 const tabs: { key: Tab; icon: typeof Squares2X2Icon; label: string }[] = [
   { key: 'items', icon: Squares2X2Icon, label: 'Menü' },
@@ -34,6 +36,7 @@ const tabs: { key: Tab; icon: typeof Squares2X2Icon; label: string }[] = [
   { key: 'languages', icon: LanguageIcon, label: 'Diller' },
   { key: 'business', icon: BuildingStorefrontIcon, label: 'İşletme' },
   { key: 'reviews', icon: ChatBubbleLeftRightIcon, label: 'Yorumlar' },
+  { key: 'qr', icon: QrCodeIcon, label: 'QR Kod' },
 ];
 
 export function AdminPanel({ locale }: AdminPanelProps) {
@@ -76,6 +79,38 @@ export function AdminPanel({ locale }: AdminPanelProps) {
 
   if (!user) {
     return <LoginForm />;
+  }
+
+  // İzin verilen admin e-postaları (NEXT_PUBLIC_ADMIN_EMAILS="a@x.com,b@y.com")
+  // Ayarlanmazsa geriye dönük uyumluluk için giriş yapan herkese izin verilir.
+  const adminEmails = (process.env.NEXT_PUBLIC_ADMIN_EMAILS || '')
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  const isAllowed =
+    adminEmails.length === 0 ||
+    (!!user.email && adminEmails.includes(user.email.toLowerCase()));
+
+  if (!isAllowed) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-zinc-50 px-6">
+        <div className="text-center max-w-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-2xl">
+            🔒
+          </div>
+          <h1 className="mt-4 text-xl font-semibold text-zinc-900">Yetkisiz erişim</h1>
+          <p className="mt-2 text-sm text-zinc-500">
+            <span className="font-medium">{user.email}</span> bu paneli görüntüleme yetkisine sahip değil.
+          </p>
+          <button
+            onClick={signOut}
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-zinc-800 transition-colors"
+          >
+            Çıkış Yap
+          </button>
+        </div>
+      </div>
+    );
   }
 
   const handleTabChange = (tab: Tab) => {
@@ -193,8 +228,10 @@ export function AdminPanel({ locale }: AdminPanelProps) {
             <LanguageManager locale={adminLocale} />
           ) : activeTab === 'business' ? (
             <BusinessManager locale={adminLocale} />
-          ) : (
+          ) : activeTab === 'reviews' ? (
             <ReviewManager locale={adminLocale} />
+          ) : (
+            <QRCodeManager />
           )}
         </div>
       </main>

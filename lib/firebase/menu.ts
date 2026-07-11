@@ -42,7 +42,6 @@ export const getMenuItems = async (): Promise<MenuItem[]> => {
     console.error('getMenuItems error:', error);
     // OrderBy hatası varsa, orderBy olmadan dene
     if (error.code === 'failed-precondition') {
-      console.log('getMenuItems: OrderBy hatası, orderBy olmadan deniyor...');
       const qWithoutOrder = query(collection(db, MENU_ITEMS_COLLECTION));
       const querySnapshot = await getDocs(qWithoutOrder);
       const items = querySnapshot.docs.map(doc => ({
@@ -103,22 +102,14 @@ export const addMenuItem = async (item: Omit<MenuItem, 'id' | 'createdAt' | 'upd
 export const updateMenuItem = async (id: string, item: Partial<Omit<MenuItem, 'id' | 'createdAt'>>): Promise<void> => {
   const db = getDb();
   const docRef = doc(db, MENU_ITEMS_COLLECTION, id);
-  
-  console.log('Firebase updateMenuItem çağrıldı:', { id, item });
-  
+
   // Timestamp'i ayrı tut, diğer tüm alanları gönder
   const { updatedAt, ...itemWithoutUpdatedAt } = item as any;
-  
-  const updatePayload = {
+
+  await updateDoc(docRef, {
     ...itemWithoutUpdatedAt,
     updatedAt: Timestamp.now(),
-  };
-  
-  console.log('Firebase updateDoc payload:', updatePayload);
-  
-  await updateDoc(docRef, updatePayload);
-  
-  console.log('Firebase updateDoc başarılı');
+  });
 };
 
 export const deleteMenuItem = async (id: string): Promise<void> => {
@@ -171,15 +162,8 @@ export const subscribeToMenuItems = (
     return onSnapshot(
       q, 
       (querySnapshot) => {
-        console.log('Real-time listener: Menu items changed, snapshot size:', querySnapshot.size);
         const items = querySnapshot.docs.map(doc => {
           const data = doc.data();
-          console.log(`Item ${doc.id} data:`, {
-            nameTr: data.nameTr,
-            nameEn: data.nameEn,
-            descriptionTr: data.descriptionTr,
-            descriptionEn: data.descriptionEn
-          });
           return {
             id: doc.id,
             ...data,
@@ -193,7 +177,6 @@ export const subscribeToMenuItems = (
         console.error('Error in menu items listener:', error);
         // OrderBy hatası varsa, orderBy olmadan dene
         if (error.code === 'failed-precondition') {
-          console.log('Retrying without orderBy...');
           const qWithoutOrder = collection(db, MENU_ITEMS_COLLECTION);
           return onSnapshot(qWithoutOrder, (querySnapshot) => {
             const items = querySnapshot.docs.map(doc => ({
@@ -248,7 +231,6 @@ export const subscribeToCategories = (
         console.error('Error in categories listener:', error);
         // OrderBy hatası varsa, orderBy olmadan dene
         if (error.code === 'failed-precondition') {
-          console.log('Retrying categories without orderBy...');
           const qWithoutOrder = collection(db, CATEGORIES_COLLECTION);
           onSnapshot(qWithoutOrder, (querySnapshot) => {
             const categories = querySnapshot.docs.map(doc => ({

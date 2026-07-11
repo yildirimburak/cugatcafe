@@ -5,11 +5,16 @@ Modern, çok dilli cafe menü yönetim sistemi. Next.js, Firebase ve Vercel ile 
 ## Özellikler
 
 - 🍽️ **Modern Menü Görünümü**: Kategorilere göre düzenlenmiş, görsel açıdan zengin menü
-- 🌍 **Çoklu Dil Desteği**: Türkçe ve İngilizce dil desteği
-- 🔐 **Admin Paneli**: Menü öğeleri ve kategorileri yönetebileceğiniz kapsamlı admin paneli
-- 📱 **Responsive Tasarım**: Mobil ve desktop uyumlu modern tasarım
+- 🔍 **Arama & Alerjen Filtresi**: Ürün arama ve alerjene göre "içermesin" filtreleme
+- 🖼️ **Resim Yakınlaştırma**: Tam ekran lightbox — pinch-to-zoom, çift dokunma, kaydırma
+- 🌍 **75+ Dil Desteği**: `next-intl` ile geniş dil listesi (12 dil tam çevrili, gerisi TR'ye fallback)
+- 📲 **PWA**: Ana ekrana eklenebilir, temel offline destek (service worker)
+- 🔗 **QR Kod Üreteci**: Admin panelde masalar için menü QR kodu oluştur/indir/yazdır
+- 🔎 **SEO**: `generateMetadata`, Open Graph, `sitemap.xml`, `robots.txt`, manifest
+- 🔐 **Admin Paneli**: Menü, kategori, dil, işletme, yorum ve QR yönetimi (e-posta allowlist ile korunabilir)
+- 📱 **Responsive Tasarım**: Mobil öncelikli modern tasarım (RTL: ar, he, fa, ur, ps)
 - 🔥 **Firebase Entegrasyonu**: Firestore veritabanı ve Firebase Storage
-- ⚡ **Vercel Optimized**: Vercel platformuna özel optimizasyonlar
+- ⚡ **Vercel Optimized**: Vercel platformuna özel optimizasyonlar + Analytics
 
 ## Teknolojiler
 
@@ -40,7 +45,14 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# Opsiyonel
+NEXT_PUBLIC_SITE_URL=https://cugatcafe.vercel.app   # SEO / sitemap / robots için
+NEXT_PUBLIC_ADMIN_EMAILS=admin@cugatcafe.com         # virgülle ayrılmış admin e-postaları (boşsa herkes girer)
+NEXT_PUBLIC_CURRENCY=₺                                # para birimi sembolü (€, $, £ ...)
 ```
+
+> **Güvenlik:** `firestore.rules` ve `storage.rules` içindeki `isAdmin()` fonksiyonundaki e-posta listesini kendi admin e-postalarınızla güncelleyin ve Firebase Console > Authentication'dan **self-signup'ı kapatın**. Kuralları dağıtmak için: `firebase deploy --only firestore:rules,storage`
 
 4. Firebase Firestore'da şu koleksiyonları oluşturun:
    - `menuItems`: Menü öğeleri

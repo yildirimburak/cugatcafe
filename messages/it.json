@@ -15,7 +15,13 @@
     "categories": "Categorie",
     "all": "Tutti",
     "changeLanguage": "Cambia lingua",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "notFoundTitle": "Pagina non trovata",
+    "notFoundText": "La pagina che cerchi non esiste.",
+    "backToMenu": "Torna al menù",
+    "errorTitle": "Qualcosa è andato storto",
+    "errorText": "Si è verificato un errore imprevisto. Riprova.",
+    "retry": "Riprova"
   },
   "home": {
     "welcome": "Benvenuto",
@@ -43,7 +49,12 @@
       "sesame": "Sesamo",
       "vegetarian": "Vegetariano",
       "vegan": "Vegano"
-    }
+    },
+    "zoomImage": "Ingrandisci immagine",
+    "searchPlaceholder": "Cerca piatti...",
+    "noResults": "Nessun risultato trovato",
+    "allergenFilter": "Filtro allergeni",
+    "clearFilters": "Cancella filtri"
   },
   "admin": {
     "title": "Pannello di Amministrazione",
@@ -66,6 +77,8 @@
     "loginSuccess": "Accesso riuscito",
     "loginError": "Accesso fallito",
     "logoutSuccess": "Disconnessione riuscita"
+  },
+  "meta": {
+    "description": "Menù digitale del Cugat Café — colazione, caffè, dolci e altro, con foto e informazioni sugli allergeni."
   }
 }
-

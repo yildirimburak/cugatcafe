@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { MenuItem, AllergyTag } from '@/lib/types';
+import { formatPrice } from '@/lib/utils/format';
 
 interface MenuCardProps {
   item: MenuItem;
@@ -57,7 +58,7 @@ export function MenuCard({ item, name, description, onClick }: MenuCardProps) {
             {name}
           </h3>
           <span className="text-sm font-semibold text-zinc-900 tabular-nums flex-shrink-0">
-            {item.price.toFixed(0)} ₺
+            {formatPrice(item.price)}
           </span>
         </div>
         {description && (

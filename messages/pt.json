@@ -15,7 +15,13 @@
     "categories": "Categorias",
     "all": "Todos",
     "changeLanguage": "Alterar idioma",
-    "close": "Fechar"
+    "close": "Fechar",
+    "notFoundTitle": "Página não encontrada",
+    "notFoundText": "A página que você procura não existe.",
+    "backToMenu": "Voltar ao cardápio",
+    "errorTitle": "Algo deu errado",
+    "errorText": "Ocorreu um erro inesperado. Tente novamente.",
+    "retry": "Tentar novamente"
   },
   "home": {
     "welcome": "Bem-vindo",
@@ -43,7 +49,12 @@
       "sesame": "Gergelim",
       "vegetarian": "Vegetariano",
       "vegan": "Vegano"
-    }
+    },
+    "zoomImage": "Ampliar imagem",
+    "searchPlaceholder": "Buscar pratos...",
+    "noResults": "Nenhum resultado encontrado",
+    "allergenFilter": "Filtro de alérgenos",
+    "clearFilters": "Limpar filtros"
   },
   "admin": {
     "title": "Painel de Administração",
@@ -66,6 +77,8 @@
     "loginSuccess": "Login bem-sucedido",
     "loginError": "Falha no login",
     "logoutSuccess": "Logout bem-sucedido"
+  },
+  "meta": {
+    "description": "Cardápio digital do Cugat Café — café da manhã, café, sobremesas e mais, com fotos e informações de alérgenos."
   }
 }
-

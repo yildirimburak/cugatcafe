@@ -15,7 +15,13 @@
     "categories": "カテゴリ",
     "all": "すべて",
     "changeLanguage": "言語を変更",
-    "close": "閉じる"
+    "close": "閉じる",
+    "notFoundTitle": "ページが見つかりません",
+    "notFoundText": "お探しのページは存在しません。",
+    "backToMenu": "メニューに戻る",
+    "errorTitle": "問題が発生しました",
+    "errorText": "予期しないエラーが発生しました。もう一度お試しください。",
+    "retry": "再試行"
   },
   "home": {
     "welcome": "いらっしゃいませ",
@@ -43,7 +49,12 @@
       "sesame": "ごま",
       "vegetarian": "ベジタリアン",
       "vegan": "ビーガン"
-    }
+    },
+    "zoomImage": "画像を拡大",
+    "searchPlaceholder": "料理を検索...",
+    "noResults": "結果が見つかりません",
+    "allergenFilter": "アレルゲンフィルター",
+    "clearFilters": "フィルターをクリア"
   },
   "admin": {
     "title": "管理パネル",
@@ -66,6 +77,8 @@
     "loginSuccess": "ログイン成功",
     "loginError": "ログイン失敗",
     "logoutSuccess": "ログアウト成功"
+  },
+  "meta": {
+    "description": "Cugat Caféのデジタルメニュー — 朝食、コーヒー、デザートなど。写真とアレルゲン情報付き。"
   }
 }
-

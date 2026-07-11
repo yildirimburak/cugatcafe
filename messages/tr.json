@@ -17,7 +17,13 @@
     "categories": "Kategoriler",
     "all": "Tümü",
     "changeLanguage": "Dil Değiştir",
-    "close": "Kapat"
+    "close": "Kapat",
+    "notFoundTitle": "Sayfa bulunamadı",
+    "notFoundText": "Aradığınız sayfa mevcut değil.",
+    "backToMenu": "Menüye dön",
+    "errorTitle": "Bir şeyler ters gitti",
+    "errorText": "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.",
+    "retry": "Tekrar dene"
   },
   "home": {
     "welcome": "Hoş Geldiniz",
@@ -85,7 +91,12 @@
       "sesame": "Susam",
       "vegetarian": "Vejetaryen",
       "vegan": "Vegan"
-    }
+    },
+    "zoomImage": "Resmi büyüt",
+    "searchPlaceholder": "Ürün ara...",
+    "noResults": "Sonuç bulunamadı",
+    "allergenFilter": "Alerjen filtresi",
+    "clearFilters": "Filtreleri temizle"
   },
   "admin": {
     "title": "Yönetim Paneli",
@@ -108,6 +119,8 @@
     "loginSuccess": "Giriş başarılı",
     "loginError": "Giriş başarısız",
     "logoutSuccess": "Çıkış başarılı"
+  },
+  "meta": {
+    "description": "Cugat Café dijital menüsü — kahvaltı, kahve, tatlılar ve daha fazlası. Fotoğraflar ve alerjen bilgileriyle."
   }
 }
-

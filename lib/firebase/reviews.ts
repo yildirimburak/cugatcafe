@@ -71,7 +71,6 @@ export const getReviews = async (visibleOnly: boolean = false): Promise<Review[]
       return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
     });
     
-    console.log('getReviews: Fetched', reviews.length, 'reviews');
     return reviews;
   } catch (error: any) {
     console.error('Error fetching reviews:', error);

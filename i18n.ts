@@ -12,6 +12,10 @@ export const locales = [
 ] as const;
 export type Locale = (typeof locales)[number];
 
+// Sağdan-sola yazılan diller
+export const rtlLocales: string[] = ['ar', 'he', 'fa', 'ur', 'ps'];
+export const isRtlLocale = (locale: string): boolean => rtlLocales.includes(locale);
+
 // Dil isimleri (LanguageSwitcher için fallback - Firebase'den gelenler öncelikli)
 export const localeNames: Record<Locale, string> = {
   tr: 'Türkçe',

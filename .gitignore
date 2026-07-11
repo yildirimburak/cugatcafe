@@ -37,3 +37,6 @@ next-env.d.ts
 
 # menu images (resimleri git'e eklemek isterseniz bu satırı silin)
 # public/menu-items/*
+
+# yerel yedekler
+/backups

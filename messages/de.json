@@ -15,7 +15,13 @@
     "categories": "Kategorien",
     "all": "Alle",
     "changeLanguage": "Sprache ändern",
-    "close": "Schließen"
+    "close": "Schließen",
+    "notFoundTitle": "Seite nicht gefunden",
+    "notFoundText": "Die gesuchte Seite existiert nicht.",
+    "backToMenu": "Zurück zum Menü",
+    "errorTitle": "Etwas ist schiefgelaufen",
+    "errorText": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "retry": "Erneut versuchen"
   },
   "home": {
     "welcome": "Willkommen",
@@ -43,7 +49,12 @@
       "sesame": "Sesam",
       "vegetarian": "Vegetarisch",
       "vegan": "Vegan"
-    }
+    },
+    "zoomImage": "Bild vergrößern",
+    "searchPlaceholder": "Gerichte suchen...",
+    "noResults": "Keine Ergebnisse gefunden",
+    "allergenFilter": "Allergenfilter",
+    "clearFilters": "Filter löschen"
   },
   "admin": {
     "title": "Verwaltungsbereich",
@@ -66,6 +77,8 @@
     "loginSuccess": "Anmeldung erfolgreich",
     "loginError": "Anmeldung fehlgeschlagen",
     "logoutSuccess": "Abmeldung erfolgreich"
+  },
+  "meta": {
+    "description": "Digitale Speisekarte des Cugat Café — Frühstück, Kaffee, Desserts und mehr, mit Fotos und Allergeninformationen."
   }
 }
-

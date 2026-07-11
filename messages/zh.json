@@ -15,7 +15,13 @@
     "categories": "类别",
     "all": "全部",
     "changeLanguage": "更改语言",
-    "close": "关闭"
+    "close": "关闭",
+    "notFoundTitle": "页面未找到",
+    "notFoundText": "您查找的页面不存在。",
+    "backToMenu": "返回菜单",
+    "errorTitle": "出错了",
+    "errorText": "发生了意外错误，请重试。",
+    "retry": "重试"
   },
   "home": {
     "welcome": "欢迎",
@@ -43,7 +49,12 @@
       "sesame": "芝麻",
       "vegetarian": "素食",
       "vegan": "纯素"
-    }
+    },
+    "zoomImage": "放大图片",
+    "searchPlaceholder": "搜索菜品...",
+    "noResults": "未找到结果",
+    "allergenFilter": "过敏原筛选",
+    "clearFilters": "清除筛选"
   },
   "admin": {
     "title": "管理面板",
@@ -66,6 +77,8 @@
     "loginSuccess": "登录成功",
     "loginError": "登录失败",
     "logoutSuccess": "登出成功"
+  },
+  "meta": {
+    "description": "Cugat Café 电子菜单 — 早餐、咖啡、甜点等，附照片和过敏原信息。"
   }
 }
-

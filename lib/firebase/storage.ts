@@ -78,12 +78,9 @@ export const uploadImage = async (file: File, path: string, useBase64: boolean =
   try {
     // Base64 modunda çalışıyoruz
     if (useBase64) {
-      console.log('Resim Base64 olarak kaydediliyor...');
-      
       // Önce resmi sıkıştır (800px max, kalite 0.8)
       const compressedFile = await compressImage(file, 800, 0.8);
-      console.log(`Orijinal: ${(file.size / 1024).toFixed(1)}KB -> Sıkıştırılmış: ${(compressedFile.size / 1024).toFixed(1)}KB`);
-      
+
       // Firestore limit kontrolü (1MB = 1048576 bytes)
       const MAX_SIZE = 1048000; // 1MB'dan biraz küçük
       if (compressedFile.size > MAX_SIZE) {
@@ -124,7 +121,6 @@ export const uploadImage = async (file: File, path: string, useBase64: boolean =
     
     // Storage başarısız olursa Base64'e düş
     if (error.message?.includes('Storage') || error.message?.includes('firebasestorage')) {
-      console.log('Storage başarısız oldu, Base64 kullanılıyor...');
       try {
         const base64 = await fileToBase64(file);
         return base64;

@@ -15,7 +15,13 @@
     "categories": "카테고리",
     "all": "전체",
     "changeLanguage": "언어 변경",
-    "close": "닫기"
+    "close": "닫기",
+    "notFoundTitle": "페이지를 찾을 수 없습니다",
+    "notFoundText": "찾으시는 페이지가 존재하지 않습니다.",
+    "backToMenu": "메뉴로 돌아가기",
+    "errorTitle": "문제가 발생했습니다",
+    "errorText": "예기치 않은 오류가 발생했습니다. 다시 시도해 주세요.",
+    "retry": "다시 시도"
   },
   "home": {
     "welcome": "환영합니다",
@@ -43,7 +49,12 @@
       "sesame": "참깨",
       "vegetarian": "채식주의자",
       "vegan": "비건"
-    }
+    },
+    "zoomImage": "이미지 확대",
+    "searchPlaceholder": "메뉴 검색...",
+    "noResults": "결과가 없습니다",
+    "allergenFilter": "알레르기 필터",
+    "clearFilters": "필터 지우기"
   },
   "admin": {
     "title": "관리 패널",
@@ -66,6 +77,8 @@
     "loginSuccess": "로그인 성공",
     "loginError": "로그인 실패",
     "logoutSuccess": "로그아웃 성공"
+  },
+  "meta": {
+    "description": "Cugat Café 디지털 메뉴 — 아침 식사, 커피, 디저트 등. 사진과 알레르기 정보 포함."
   }
 }
-

@@ -17,7 +17,13 @@
     "categories": "Categories",
     "all": "All",
     "changeLanguage": "Change Language",
-    "close": "Close"
+    "close": "Close",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "The page you are looking for doesn't exist.",
+    "backToMenu": "Back to menu",
+    "errorTitle": "Something went wrong",
+    "errorText": "An unexpected error occurred. Please try again.",
+    "retry": "Try again"
   },
   "home": {
     "welcome": "Welcome",
@@ -85,7 +91,12 @@
       "sesame": "Sesame",
       "vegetarian": "Vegetarian",
       "vegan": "Vegan"
-    }
+    },
+    "zoomImage": "Enlarge image",
+    "searchPlaceholder": "Search dishes...",
+    "noResults": "No results found",
+    "allergenFilter": "Allergen filter",
+    "clearFilters": "Clear filters"
   },
   "admin": {
     "title": "Admin Panel",
@@ -108,6 +119,8 @@
     "loginSuccess": "Login successful",
     "loginError": "Login failed",
     "logoutSuccess": "Logout successful"
+  },
+  "meta": {
+    "description": "Cugat Café digital menu — breakfast, coffee, desserts and more, with photos and allergen information."
   }
 }
-

@@ -14,8 +14,10 @@ export interface MenuItem {
   id: string;
   name: string;
   nameEn?: string;
+  nameTr?: string;
   description: string;
   descriptionEn?: string;
+  descriptionTr?: string;
   price: number;
   category: string;
   imageUrl?: string;
@@ -23,6 +25,9 @@ export interface MenuItem {
   allergies?: AllergyTag[];
   createdAt: Date;
   updatedAt: Date;
+  // Diğer diller için dinamik çeviri alanları: nameDe, descriptionFr, vb.
+  [key: `name${string}`]: string | undefined;
+  [key: `description${string}`]: string | undefined;
 }
 
 export interface Category {
@@ -32,6 +37,8 @@ export interface Category {
   order: number;
   icon?: string;
   createdAt: Date;
+  // Diğer diller için dinamik çeviri alanları: nameDe, nameFr, vb.
+  [key: `name${string}`]: string | undefined;
 }
 
 export interface MenuItemFormData {
